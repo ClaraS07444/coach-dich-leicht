@@ -206,7 +206,7 @@ function initGsapSafely() {
   const reduceMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
   if (reduceMotion) {
     window.gsap.set(
-      [".hero-logo", ".hero-text", ".hero-buttons", ".fade-up", ".slide-left", ".slide-right"],
+      [".hero-logo", ".hero-text", ".hero-buttons", ".hero-cloud-left", ".hero-cloud-right", ".fade-up", ".slide-left", ".slide-right"],
       { clearProps: "all" }
     );
     return;
@@ -225,35 +225,63 @@ function initGsapSafely() {
    --------------------------- */
 function initHeroAnimation() {
   const heroTimeline = window.gsap.timeline({
-    defaults: { ease: "power3.out" }
+    defaults: {
+      ease: "power2.out"
+    }
   });
 
   heroTimeline
-    .from(".hero-logo", {
-      y: 90,
+    .from(".hero-cloud-left", {
+      xPercent: -125,
       opacity: 0,
-      duration: 1.15,
+      duration: 2.4,
+      ease: "power1.out",
       clearProps: "transform,opacity"
     })
     .from(
-      ".hero-text",
+      ".hero-cloud-right",
       {
-        y: 50,
+        xPercent: 125,
         opacity: 0,
-        duration: 0.9,
+        duration: 2.4,
+        ease: "power2.out",
         clearProps: "transform,opacity"
       },
-      "-=0.45"
+      "<"
+    )
+    .from(
+      ".hero-logo",
+      {
+        y: 58,
+        opacity: 0,
+        scale: 0.985,
+        duration: 2.0,
+        ease: "power2.out",
+        clearProps: "transform,opacity"
+      },
+      "-=1.45"
+    )
+    .from(
+      ".hero-text",
+      {
+        y: 32,
+        opacity: 0,
+        duration: 1.7,
+        ease: "power2.out",
+        clearProps: "transform,opacity"
+      },
+      "-=1.15"
     )
     .from(
       ".hero-buttons",
       {
-        y: 35,
+        y: 22,
         opacity: 0,
-        duration: 0.8,
+        duration: 1.55,
+        ease: "power2.out",
         clearProps: "transform,opacity"
       },
-      "-=0.35"
+      "-=1.05"
     );
 }
 
@@ -264,15 +292,15 @@ function initScrollAnimations() {
   const media = window.gsap.matchMedia();
 
   media.add("(max-width: 767px)", () => {
-    animateFadeUp(42, "top 90%", 0.82);
-    animateSideElements(".slide-left", -35, "top 90%", 0.88);
-    animateSideElements(".slide-right", 35, "top 90%", 0.88);
+    animateFadeUp(28, "top 90%", 1.45);
+    animateSideElements(".slide-left", -26, "top 90%", 1.6);
+    animateSideElements(".slide-right", 26, "top 90%", 1.6);
   });
 
   media.add("(min-width: 768px)", () => {
-    animateFadeUp(55, "top 86%", 0.95);
-    animateSideElements(".slide-left", -90, "top 86%", 1.1);
-    animateSideElements(".slide-right", 90, "top 86%", 1.1);
+    animateFadeUp(36, "top 88%", 1.65);
+    animateSideElements(".slide-left", -58, "top 88%", 1.85);
+    animateSideElements(".slide-right", 58, "top 88%", 1.85);
   });
 }
 
@@ -300,7 +328,7 @@ function animateSideElements(selector, distance, start, duration) {
       x: distance,
       opacity: 0,
       duration,
-      ease: "power3.out",
+      ease: "power2.out",
       clearProps: "transform,opacity",
       scrollTrigger: {
         trigger: element,

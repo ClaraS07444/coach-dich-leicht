@@ -890,3 +890,338 @@ article {
     animation-iteration-count: 1 !important;
   }
 }
+
+
+/* =========================================================
+   DESIGN UPDATE 2.0 – LIGHT BLUE, COURIER, APPLE-INSPIRED
+   ========================================================= */
+:root {
+  --color-sky: #eaf6ff;
+  --color-sky-strong: #d7efff;
+  --color-sky-deep: #bfe3fa;
+  --color-surface: #f7fbfe;
+  --color-cloud: rgba(201, 234, 255, 0.78);
+  --font-heading: "Courier New", Courier, monospace;
+  --container: 1240px;
+  --radius-small: 14px;
+  --radius-medium: 26px;
+  --radius-large: 38px;
+  --shadow-small: 0 12px 34px rgba(24, 59, 86, 0.08);
+  --shadow-medium: 0 28px 80px rgba(24, 59, 86, 0.12);
+}
+
+body {
+  background: var(--color-surface);
+  line-height: 1.7;
+}
+
+h1,
+h2,
+h3,
+h4,
+.eyebrow,
+.nav-list a,
+.brand-link,
+.button,
+.offer-label,
+.pillar-number {
+  font-family: var(--font-heading);
+}
+
+h1,
+h2,
+h3,
+h4 {
+  letter-spacing: -0.035em;
+  text-transform: none;
+}
+
+h1 {
+  font-size: clamp(2.35rem, 7vw, 5.4rem);
+}
+
+h2 {
+  font-size: clamp(2.2rem, 5vw, 4.4rem);
+}
+
+h3 {
+  font-size: clamp(1.45rem, 3vw, 2.35rem);
+}
+
+.section {
+  padding-block: clamp(5rem, 9vw, 9rem);
+}
+
+.section-heading-centered {
+  max-width: 820px;
+  margin-inline: auto;
+  text-align: center;
+}
+
+.section-lead {
+  max-width: 720px;
+  margin: 1.25rem auto 0;
+  color: var(--color-muted);
+  font-size: clamp(1.05rem, 2vw, 1.28rem);
+}
+
+.site-header {
+  background: rgba(24, 59, 86, 0.94);
+  box-shadow: 0 1px 0 rgba(255, 255, 255, 0.15);
+  backdrop-filter: blur(18px);
+  -webkit-backdrop-filter: blur(18px);
+}
+
+.button {
+  border-radius: 999px;
+  transition: transform 350ms cubic-bezier(0.22, 1, 0.36, 1), box-shadow 350ms ease, background 350ms ease;
+}
+
+.button-primary {
+  border-color: var(--color-yellow);
+  box-shadow: 0 12px 30px rgba(228, 180, 0, 0.18);
+}
+
+.button-primary:hover {
+  color: var(--color-blue);
+  background: #f7c817;
+  box-shadow: 0 16px 36px rgba(228, 180, 0, 0.24);
+  transform: translateY(-3px) scale(1.012);
+}
+
+.hero {
+  min-height: calc(100svh - var(--header-height));
+  background:
+    radial-gradient(circle at 50% 28%, rgba(191, 227, 250, 0.7), transparent 34%),
+    linear-gradient(180deg, #ffffff 0%, #f7fbfe 70%, var(--color-sky) 100%);
+}
+
+.hero-inner {
+  padding-block: clamp(5rem, 10vw, 9rem);
+}
+
+.hero-visual {
+  position: relative;
+  display: grid;
+  width: min(100%, 980px);
+  place-items: center;
+  isolation: isolate;
+}
+
+.hero-logo {
+  position: relative;
+  z-index: 2;
+  width: min(82vw, 620px);
+  max-height: 48vh;
+  margin-bottom: var(--space-4);
+}
+
+.hero-cloud {
+  position: absolute;
+  z-index: 1;
+  top: 42%;
+  width: clamp(150px, 22vw, 310px);
+  height: clamp(70px, 10vw, 130px);
+  border-radius: 999px;
+  background: var(--color-cloud);
+  filter: blur(0.2px);
+  opacity: 0.9;
+}
+
+.hero-cloud-left {
+  left: -2%;
+}
+
+.hero-cloud-right {
+  right: -2%;
+}
+
+.cloud-bubble {
+  position: absolute;
+  display: block;
+  border-radius: 50%;
+  background: inherit;
+}
+
+.cloud-bubble-one {
+  top: -38%;
+  left: 17%;
+  width: 45%;
+  aspect-ratio: 1;
+}
+
+.cloud-bubble-two {
+  top: -62%;
+  left: 40%;
+  width: 56%;
+  aspect-ratio: 1;
+}
+
+.cloud-bubble-three {
+  top: -28%;
+  right: 5%;
+  width: 38%;
+  aspect-ratio: 1;
+}
+
+.hero-text p {
+  font-size: clamp(1.05rem, 2vw, 1.35rem);
+}
+
+.about-section {
+  background: linear-gradient(180deg, #f7fbfe 0%, var(--color-sky) 100%);
+}
+
+.story-row {
+  align-items: center;
+}
+
+.story-media,
+.story-card,
+.offer-intro,
+.offer-card,
+.contact-copy,
+.contact-form,
+.testimonial-card,
+.pillar-card {
+  box-shadow: var(--shadow-small);
+}
+
+.story-media {
+  border-width: 2px;
+}
+
+.story-card {
+  border-width: 2px;
+  padding: clamp(1.75rem, 4vw, 3.2rem);
+}
+
+/* Three pillars */
+.pillars-section {
+  background: #ffffff;
+}
+
+.pillars-grid {
+  display: grid;
+  gap: clamp(1.5rem, 3vw, 2.5rem);
+}
+
+.pillar-card {
+  overflow: hidden;
+  border: 1px solid rgba(24, 59, 86, 0.1);
+  border-radius: var(--radius-large);
+  background: #ffffff;
+  transition: transform 500ms cubic-bezier(0.22, 1, 0.36, 1), box-shadow 500ms ease;
+}
+
+.pillar-card:hover {
+  box-shadow: var(--shadow-medium);
+  transform: translateY(-8px);
+}
+
+.pillar-media {
+  overflow: hidden;
+  aspect-ratio: 4 / 3;
+  margin: 0;
+  background: var(--color-sky);
+}
+
+.pillar-media img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform 800ms cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.pillar-card:hover .pillar-media img {
+  transform: scale(1.035);
+}
+
+.pillar-content {
+  padding: clamp(1.5rem, 3vw, 2.3rem);
+}
+
+.pillar-number {
+  margin-bottom: 0.45rem;
+  color: var(--color-yellow-dark);
+  font-size: 0.88rem;
+  font-weight: 800;
+  letter-spacing: 0.14em;
+}
+
+.pillar-content blockquote {
+  margin: 1.35rem 0;
+  padding: 1rem 1.25rem;
+  border-left: 4px solid var(--color-yellow);
+  color: var(--color-blue);
+  background: var(--color-sky);
+  font-family: var(--font-heading);
+  font-weight: 700;
+}
+
+.testimonials-section {
+  background: linear-gradient(180deg, var(--color-sky) 0%, var(--color-sky-strong) 100%);
+}
+
+.testimonial-card {
+  border: 1px solid rgba(24, 59, 86, 0.1);
+}
+
+.offers-section {
+  background: linear-gradient(155deg, #102c42 0%, #183b56 52%, #224f70 100%);
+}
+
+.offer-intro,
+.offer-card {
+  border-width: 1px;
+  border-color: rgba(214, 181, 136, 0.8);
+}
+
+.contact-section {
+  background: linear-gradient(180deg, #ffffff 0%, var(--color-sky) 100%);
+}
+
+.contact-copy,
+.contact-form {
+  border-width: 2px;
+}
+
+@media (min-width: 768px) {
+  .pillars-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .pillar-card:last-child {
+    grid-column: 1 / -1;
+    width: min(100%, 590px);
+    margin-inline: auto;
+  }
+}
+
+@media (min-width: 1100px) {
+  .pillars-grid {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
+
+  .pillar-card:last-child {
+    grid-column: auto;
+    width: auto;
+  }
+}
+
+@media (max-width: 767px) {
+  .hero-cloud {
+    top: 38%;
+    width: 145px;
+    height: 62px;
+    opacity: 0.72;
+  }
+
+  .hero-cloud-left {
+    left: -24%;
+  }
+
+  .hero-cloud-right {
+    right: -24%;
+  }
+}
