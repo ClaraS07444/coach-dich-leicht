@@ -206,14 +206,14 @@ function initGsapSafely() {
   const reduceMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
   if (reduceMotion) {
     window.gsap.set(
-      [".hero-logo", ".hero-text", ".hero-buttons", ".hero-cloud-left", ".hero-cloud-right", ".opinion-cloud-left", ".opinion-cloud-right", ".fade-up", ".slide-left", ".slide-right"],
+      [".hero-logo", ".hero-text", ".hero-buttons", ".hero-cloud-left", ".hero-cloud-right", ".section-cloud", ".fade-up", ".slide-left", ".slide-right"],
       { clearProps: "all" }
     );
     return;
   }
 
   initHeroAnimation();
-  initOpinionCloudAnimation();
+  initSectionCloudAnimations();
   initScrollAnimations();
 
   window.addEventListener("load", () => {
@@ -290,36 +290,38 @@ function initHeroAnimation() {
 /* ---------------------------
    Decorative clouds in testimonials
    --------------------------- */
-function initOpinionCloudAnimation() {
-  const timeline = window.gsap.timeline({
-    scrollTrigger: {
-      trigger: ".testimonials-section",
-      start: "top 82%",
-      once: true
-    }
-  });
+function initSectionCloudAnimations() {
+  window.gsap.utils.toArray("section[id]").forEach((section) => {
+    const leftCloud = section.querySelector(".section-cloud-left");
+    const rightCloud = section.querySelector(".section-cloud-right");
 
-  timeline
-    .from(".opinion-cloud-left", {
-      x: -70,
-      opacity: 0,
-      duration: 3.0,
-      ease: "sine.out",
-      force3D: false,
-      clearProps: "transform,opacity"
-    })
-    .from(
-      ".opinion-cloud-right",
+    if (!leftCloud && !rightCloud) return;
+
+    const clouds = [leftCloud, rightCloud].filter(Boolean);
+    window.gsap.fromTo(
+      clouds,
       {
-        x: 70,
-        opacity: 0,
-        duration: 3.0,
-        ease: "sine.out",
-        force3D: false,
-        clearProps: "transform,opacity"
+        autoAlpha: 0,
+        x: (index) => index === 0 ? -46 : 46
       },
-      "<"
+      {
+        autoAlpha: 1,
+        x: 0,
+        duration: 3.2,
+        stagger: 0.08,
+        ease: "sine.out",
+        force3D: true,
+        overwrite: "auto",
+        scrollTrigger: {
+          trigger: section,
+          start: "top 84%",
+          once: true,
+          invalidateOnRefresh: true
+        },
+        onComplete: () => window.gsap.set(clouds, { clearProps: "transform,opacity,visibility" })
+      }
     );
+  });
 }
 
 /* ---------------------------
@@ -329,52 +331,62 @@ function initScrollAnimations() {
   const media = window.gsap.matchMedia();
 
   media.add("(max-width: 767px)", () => {
-    animateFadeUp(18, "top 92%", 2.15);
-    animateSideElements(".slide-left", -14, "top 92%", 2.35);
-    animateSideElements(".slide-right", 14, "top 92%", 2.35);
+    animateFadeUp(12, "top 94%", 2.2);
+    animateMediaReveal(".slide-left, .slide-right", 10, "top 94%", 2.4);
   });
 
   media.add("(min-width: 768px)", () => {
-    animateFadeUp(22, "top 90%", 2.35);
-    animateSideElements(".slide-left", -20, "top 90%", 2.6);
-    animateSideElements(".slide-right", 20, "top 90%", 2.6);
+    animateFadeUp(15, "top 92%", 2.4);
+    animateMediaReveal(".slide-left, .slide-right", 12, "top 92%", 2.65);
   });
 }
 
 function animateFadeUp(distance, start, duration) {
   window.gsap.utils.toArray(".fade-up").forEach((element) => {
-    window.gsap.from(element, {
-      y: distance,
-      opacity: 0,
-      duration,
-      ease: "sine.out",
-      force3D: false,
-      clearProps: "transform,opacity",
-      scrollTrigger: {
-        trigger: element,
-        start,
-        once: true,
-        invalidateOnRefresh: true
+    window.gsap.fromTo(
+      element,
+      { autoAlpha: 0, y: distance },
+      {
+        autoAlpha: 1,
+        y: 0,
+        duration,
+        ease: "sine.out",
+        force3D: true,
+        overwrite: "auto",
+        scrollTrigger: {
+          trigger: element,
+          start,
+          once: true,
+          invalidateOnRefresh: true
+        },
+        onComplete: () => window.gsap.set(element, { clearProps: "transform,opacity,visibility" })
       }
-    });
+    );
   });
 }
 
-function animateSideElements(selector, distance, start, duration) {
+function animateMediaReveal(selector, distance, start, duration) {
   window.gsap.utils.toArray(selector).forEach((element) => {
-    window.gsap.from(element, {
-      x: distance,
-      opacity: 0,
-      duration,
-      ease: "sine.out",
-      force3D: false,
-      clearProps: "transform,opacity",
-      scrollTrigger: {
-        trigger: element,
-        start,
-        once: true,
-        invalidateOnRefresh: true
+    window.gsap.fromTo(
+      element,
+      { autoAlpha: 0, y: distance, scale: 0.995 },
+      {
+        autoAlpha: 1,
+        y: 0,
+        scale: 1,
+        duration,
+        ease: "sine.out",
+        force3D: true,
+        overwrite: "auto",
+        scrollTrigger: {
+          trigger: element,
+          start,
+          once: true,
+          invalidateOnRefresh: true
+        },
+        onComplete: () => window.gsap.set(element, { clearProps: "transform,opacity,visibility" })
       }
-    });
+    );
   });
 }
+
