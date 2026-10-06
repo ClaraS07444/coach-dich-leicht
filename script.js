@@ -206,13 +206,14 @@ function initGsapSafely() {
   const reduceMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
   if (reduceMotion) {
     window.gsap.set(
-      [".hero-logo", ".hero-text", ".hero-buttons", ".hero-cloud-left", ".hero-cloud-right", ".fade-up", ".slide-left", ".slide-right"],
+      [".hero-logo", ".hero-text", ".hero-buttons", ".hero-cloud-left", ".hero-cloud-right", ".opinion-cloud-left", ".opinion-cloud-right", ".fade-up", ".slide-left", ".slide-right"],
       { clearProps: "all" }
     );
     return;
   }
 
   initHeroAnimation();
+  initOpinionCloudAnimation();
   initScrollAnimations();
 
   window.addEventListener("load", () => {
@@ -285,6 +286,42 @@ function initHeroAnimation() {
     );
 }
 
+
+/* ---------------------------
+   Decorative clouds in testimonials
+   --------------------------- */
+function initOpinionCloudAnimation() {
+  const timeline = window.gsap.timeline({
+    scrollTrigger: {
+      trigger: ".testimonials-section",
+      start: "top 82%",
+      once: true
+    }
+  });
+
+  timeline
+    .from(".opinion-cloud-left", {
+      x: -70,
+      opacity: 0,
+      duration: 3.0,
+      ease: "sine.out",
+      force3D: false,
+      clearProps: "transform,opacity"
+    })
+    .from(
+      ".opinion-cloud-right",
+      {
+        x: 70,
+        opacity: 0,
+        duration: 3.0,
+        ease: "sine.out",
+        force3D: false,
+        clearProps: "transform,opacity"
+      },
+      "<"
+    );
+}
+
 /* ---------------------------
    ScrollTrigger animations
    --------------------------- */
@@ -292,15 +329,15 @@ function initScrollAnimations() {
   const media = window.gsap.matchMedia();
 
   media.add("(max-width: 767px)", () => {
-    animateFadeUp(28, "top 90%", 1.45);
-    animateSideElements(".slide-left", -26, "top 90%", 1.6);
-    animateSideElements(".slide-right", 26, "top 90%", 1.6);
+    animateFadeUp(18, "top 92%", 2.15);
+    animateSideElements(".slide-left", -14, "top 92%", 2.35);
+    animateSideElements(".slide-right", 14, "top 92%", 2.35);
   });
 
   media.add("(min-width: 768px)", () => {
-    animateFadeUp(36, "top 88%", 1.65);
-    animateSideElements(".slide-left", -58, "top 88%", 1.85);
-    animateSideElements(".slide-right", 58, "top 88%", 1.85);
+    animateFadeUp(22, "top 90%", 2.35);
+    animateSideElements(".slide-left", -20, "top 90%", 2.6);
+    animateSideElements(".slide-right", 20, "top 90%", 2.6);
   });
 }
 
@@ -310,7 +347,8 @@ function animateFadeUp(distance, start, duration) {
       y: distance,
       opacity: 0,
       duration,
-      ease: "power2.out",
+      ease: "sine.out",
+      force3D: false,
       clearProps: "transform,opacity",
       scrollTrigger: {
         trigger: element,
@@ -328,7 +366,8 @@ function animateSideElements(selector, distance, start, duration) {
       x: distance,
       opacity: 0,
       duration,
-      ease: "power2.out",
+      ease: "sine.out",
+      force3D: false,
       clearProps: "transform,opacity",
       scrollTrigger: {
         trigger: element,
