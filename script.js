@@ -60,11 +60,25 @@ function initSmoothScroll() {
       const selector = link.getAttribute("href");
       if (!selector || selector === "#") return;
 
+      event.preventDefault();
+
+      if (selector === "#startseite") {
+        window.scrollTo({
+          top: 0,
+          left: 0,
+          behavior: "smooth"
+        });
+        history.replaceState(null, "", window.location.pathname + window.location.search);
+        return;
+      }
+
       const target = document.querySelector(selector);
       if (!target) return;
 
-      event.preventDefault();
-      target.scrollIntoView({ behavior: "smooth", block: "start" });
+      target.scrollIntoView({
+        behavior: "smooth",
+        block: "start"
+      });
     });
   });
 }

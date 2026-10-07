@@ -1525,3 +1525,9 @@ h3 {
     right: -40%;
   }
 }
+
+
+/* Page-top anchor used by the Startseite links. */
+body#startseite {
+  scroll-margin-top: 0;
+}
