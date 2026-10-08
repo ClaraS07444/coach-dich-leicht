@@ -12,6 +12,7 @@ document.addEventListener("DOMContentLoaded", () => {
   initSmoothScroll();
   initCarousel();
   initForms();
+  initInteractiveFaq();
   setCurrentYear();
   initGsapSafely();
 });
@@ -192,6 +193,49 @@ function clearFormErrors(form) {
     status.className = "form-status";
     status.textContent = "";
   }
+}
+
+
+/* ---------------------------
+   Interactive FAQ / offer check
+   --------------------------- */
+function initInteractiveFaq() {
+  const check = document.querySelector("[data-faq-check]");
+  if (!check) return;
+
+  const items = Array.from(check.querySelectorAll("[data-faq-item]"));
+  const resultText = check.querySelector("[data-result-text]");
+
+  const updateResult = () => {
+    const answered = items.filter((item) => item.dataset.answer).length;
+    const yesCount = items.filter((item) => item.dataset.answer === "yes").length;
+
+    if (!resultText) return;
+    if (answered === 0) {
+      resultText.textContent = "Beantworte die Fragen, um eine persönliche Orientierung zu erhalten.";
+    } else if (answered < items.length) {
+      resultText.textContent = `Du hast ${answered} von ${items.length} Fragen beantwortet. Davon ${yesCount} mit Ja.`;
+    } else if (yesCount >= 6) {
+      resultText.textContent = `Du hast ${yesCount} Fragen mit Ja beantwortet. Eine persönliche Begleitung könnte sehr gut zu deiner aktuellen Situation passen.`;
+    } else if (yesCount >= 3) {
+      resultText.textContent = `Du hast ${yesCount} Fragen mit Ja beantwortet. Reset28 oder ein Kennenlerngespräch können dir helfen, den passenden nächsten Schritt zu finden.`;
+    } else {
+      resultText.textContent = `Du hast ${yesCount} Fragen mit Ja beantwortet. Auch wenn aktuell nur wenige Punkte zutreffen, kannst du deine Fragen unverbindlich im Kennenlerngespräch klären.`;
+    }
+  };
+
+  items.forEach((item) => {
+    const buttons = item.querySelectorAll("[data-answer]");
+    const response = item.querySelector(".faq-response");
+    buttons.forEach((button) => {
+      button.addEventListener("click", () => {
+        item.dataset.answer = button.dataset.answer;
+        buttons.forEach((candidate) => candidate.setAttribute("aria-pressed", String(candidate === button)));
+        if (response) response.hidden = false;
+        updateResult();
+      });
+    });
+  });
 }
 
 /* ---------------------------

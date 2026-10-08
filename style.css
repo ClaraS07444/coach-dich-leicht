@@ -1531,3 +1531,84 @@ h3 {
 body#startseite {
   scroll-margin-top: 0;
 }
+
+
+/* =========================================================
+   CERTIFICATE + INTERACTIVE FAQ
+   ========================================================= */
+.certificate-card {
+  margin-top: clamp(3rem, 7vw, 6rem);
+  margin-bottom: clamp(3rem, 7vw, 6rem);
+  padding: clamp(1.5rem, 4vw, 3rem);
+  border: 1px solid rgba(24, 59, 86, 0.12);
+  border-radius: var(--radius-large);
+  background: rgba(255, 255, 255, 0.82);
+  box-shadow: var(--shadow-small);
+}
+.certificate-copy { max-width: 760px; margin-bottom: 1.5rem; }
+.certificate-frame {
+  overflow: hidden;
+  width: 100%;
+  min-height: 520px;
+  border: 2px solid var(--color-yellow);
+  border-radius: 24px;
+  background: var(--color-white);
+  box-shadow: var(--shadow-small);
+}
+.certificate-pdf { display: block; width: 100%; height: min(78vh, 760px); border: 0; }
+.certificate-link { margin-top: 1.25rem; }
+
+.faq-section {
+  position: relative;
+  overflow: hidden;
+  isolation: isolate;
+  background: linear-gradient(180deg, #ffffff 0%, var(--color-sky) 100%);
+}
+.faq-section > .page-container { position: relative; z-index: 2; }
+.faq-check { display: grid; gap: 1.25rem; }
+.faq-item {
+  padding: clamp(1.35rem, 3vw, 2.2rem);
+  border: 1px solid rgba(24, 59, 86, 0.12);
+  border-radius: 24px;
+  background: rgba(255,255,255,.92);
+  box-shadow: var(--shadow-small);
+}
+.faq-item h3 { margin-bottom: 1.25rem; font-size: clamp(1.15rem, 2.5vw, 1.65rem); }
+.faq-number { margin-bottom: .45rem; color: var(--color-muted); font-family: var(--font-heading); font-size: .78rem; font-weight: 800; letter-spacing: .1em; text-transform: uppercase; }
+.faq-actions { display: flex; flex-wrap: wrap; gap: .75rem; }
+.faq-choice {
+  min-width: 120px;
+  padding: .75rem 1.1rem;
+  border: 2px solid var(--color-yellow);
+  border-radius: 999px;
+  color: var(--color-blue);
+  background: var(--color-white);
+  font-family: var(--font-heading);
+  font-weight: 800;
+  cursor: pointer;
+  transition: transform 300ms ease, background 300ms ease, box-shadow 300ms ease;
+}
+.faq-choice:hover { transform: translateY(-2px); box-shadow: var(--shadow-small); }
+.faq-choice[aria-pressed="true"] { background: var(--color-yellow); }
+.faq-response { margin-top: 1.25rem; padding: 1.2rem; border-left: 4px solid var(--color-yellow); border-radius: 0 16px 16px 0; background: var(--color-sky); }
+.faq-response p { margin: .4rem 0 0; }
+.faq-result {
+  margin-top: 1.5rem;
+  padding: clamp(1.5rem, 4vw, 3rem);
+  border: 2px solid var(--color-yellow);
+  border-radius: var(--radius-large);
+  background: var(--color-blue);
+  color: var(--color-white);
+  box-shadow: var(--shadow-medium);
+  text-align: center;
+}
+.faq-result h3, .faq-result .eyebrow { color: var(--color-white); }
+.faq-result-text { font-weight: 800; }
+.faq-waitlist-buttons { display: flex; flex-wrap: wrap; justify-content: center; gap: 1rem; margin: 1.5rem 0; }
+.faq-main-cta { margin-top: 1rem; }
+@media (max-width: 767px) {
+  .certificate-frame { min-height: 430px; }
+  .certificate-pdf { height: 62vh; }
+  .faq-choice { flex: 1 1 100%; }
+  .faq-waitlist-buttons .button { width: 100%; }
+}
