@@ -1534,3 +1534,85 @@ body#startseite {
 
 /* FAQ POP-UP QUIZ */
 .certificate-card{margin:clamp(3rem,7vw,6rem) 0;padding:clamp(1.5rem,4vw,3rem);border:1px solid rgba(24,59,86,.12);border-radius:var(--radius-large);background:rgba(255,255,255,.82);box-shadow:var(--shadow-small)}.certificate-frame{overflow:hidden;min-height:520px;border:2px solid var(--color-yellow);border-radius:24px;background:#fff}.certificate-pdf{display:block;width:100%;height:min(78vh,760px);border:0}.certificate-link{margin-top:1.25rem}.faq-section{position:relative;overflow:hidden;isolation:isolate;background:linear-gradient(180deg,#fff 0%,var(--color-sky) 100%)}.faq-section>.page-container{position:relative;z-index:2}.faq-quiz{width:min(100%,860px);margin:auto}.faq-quiz-progress{height:8px;overflow:hidden;margin-bottom:1.25rem;border-radius:999px;background:rgba(24,59,86,.12)}.faq-progress-bar{display:block;width:0;height:100%;border-radius:inherit;background:var(--color-yellow);transition:width .6s cubic-bezier(.22,1,.36,1)}.faq-quiz-slides,.faq-quiz-slide{min-height:430px}.faq-quiz-slide{padding:clamp(1.5rem,5vw,3.5rem);border:1px solid rgba(24,59,86,.12);border-radius:var(--radius-large);background:rgba(255,255,255,.95);box-shadow:var(--shadow-medium)}.faq-quiz-slide[hidden]{display:none!important}.faq-quiz-slide h3{max-width:720px;margin:0 auto 2rem;font-size:clamp(1.5rem,4vw,2.45rem);text-align:center}.faq-number{text-align:center;color:var(--color-muted);font-family:var(--font-heading);font-weight:800}.faq-actions{display:flex;flex-wrap:wrap;justify-content:center;gap:.75rem}.faq-choice{min-width:200px;padding:.75rem 1.1rem;border:2px solid var(--color-yellow);border-radius:999px;color:var(--color-blue);background:#fff;font-family:var(--font-heading);font-weight:800;cursor:pointer}.faq-choice[aria-pressed="true"]{background:var(--color-yellow)}.faq-response{max-width:700px;margin:1.5rem auto 0;padding:1.2rem;border-left:4px solid var(--color-yellow);border-radius:0 16px 16px 0;background:var(--color-sky)}.faq-next{display:flex;margin:1.5rem auto 0}.faq-result{color:#fff;background:var(--color-blue);text-align:center}.faq-result h3,.faq-result .eyebrow{color:#fff}.faq-waitlist-buttons{display:flex;flex-wrap:wrap;justify-content:center;gap:1rem;margin:1.5rem 0}.faq-restart{display:block;margin:1.25rem auto 0;border:0;color:#fff;background:transparent;text-decoration:underline;cursor:pointer}@media(max-width:767px){.certificate-frame{min-height:430px}.certificate-pdf{height:62vh}.faq-quiz-slides,.faq-quiz-slide{min-height:500px}.faq-choice{flex:1 1 100%;min-width:0}.faq-waitlist-buttons .button{width:100%}}
+
+
+/* =========================================================
+   CONTENT UPDATE – HERO, SELF-CHECK AND FREEBIES
+   ========================================================= */
+.hero-kicker {
+  margin-bottom: 1rem;
+  color: var(--color-blue);
+  font-family: var(--font-heading);
+  font-size: clamp(0.82rem, 1.5vw, 1rem);
+  font-weight: 800;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+.hero-subline {
+  max-width: 820px !important;
+}
+
+.hero-trustline {
+  max-width: 900px;
+  margin: 1.5rem auto 0;
+  color: var(--color-blue);
+  font-size: 0.92rem;
+  font-weight: 700;
+  text-align: center;
+}
+
+.freebies-block {
+  margin-top: clamp(3rem, 7vw, 6rem);
+}
+
+.freebies-heading {
+  margin-bottom: 1.5rem;
+  text-align: center;
+}
+
+.freebies-heading h3 {
+  color: var(--color-white);
+}
+
+.freebies-grid {
+  display: grid;
+  gap: clamp(1.25rem, 3vw, 2rem);
+}
+
+.freebie-card {
+  display: flex;
+  flex-direction: column;
+  padding: clamp(1.5rem, 4vw, 2.8rem);
+  border: 1px solid rgba(214, 181, 136, 0.8);
+  border-radius: var(--radius-medium);
+  color: var(--color-blue);
+  background: var(--color-white);
+  box-shadow: var(--shadow-medium);
+}
+
+.freebie-card h3 {
+  color: var(--color-blue);
+}
+
+.freebie-card .freebie-cta {
+  align-self: flex-start;
+  margin-top: auto;
+}
+
+@media (min-width: 850px) {
+  .freebies-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    align-items: stretch;
+  }
+}
+
+@media (max-width: 767px) {
+  .hero-trustline {
+    font-size: 0.82rem;
+  }
+
+  .freebie-card .freebie-cta {
+    width: 100%;
+  }
+}
