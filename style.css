@@ -1618,134 +1618,26 @@ body#startseite {
 }
 
 
-/* MAILERLITE FREEBIE FORMS */
-.mailerlite-form-shell {
-  width: 100%;
-  margin-top: auto;
-  padding-top: 1.5rem;
-}
-
-.mailerlite-form-shell .ml-embedded {
-  width: 100%;
-}
-
-.mailerlite-form-shell .ml-form-embedContainer,
-.mailerlite-form-shell .ml-form-align-center,
-.mailerlite-form-shell .ml-form-embedWrapper,
-.mailerlite-form-shell .ml-form-embedBody,
-.mailerlite-form-shell .ml-form-successBody {
-  width: 100% !important;
-  max-width: none !important;
-  margin: 0 !important;
-  padding-inline: 0 !important;
-  background: transparent !important;
-  box-shadow: none !important;
-}
-
-.mailerlite-form-shell .ml-form-embedBody,
-.mailerlite-form-shell .ml-form-successBody {
-  padding-top: 0 !important;
-}
-
-.mailerlite-form-shell .ml-form-embedContent {
-  display: none !important;
-}
-
-.mailerlite-form-shell .ml-form-formContent {
-  margin: 0 !important;
-}
-
-.mailerlite-form-shell .ml-form-fieldRow {
-  margin-bottom: 1rem !important;
-}
-
-.mailerlite-form-shell input[type="text"],
-.mailerlite-form-shell input[type="email"] {
-  width: 100% !important;
-  min-height: 50px !important;
-  padding: 0.85rem 0.95rem !important;
-  border: 2px solid rgba(24, 59, 86, 0.35) !important;
-  border-radius: var(--radius-small) !important;
-  color: var(--color-blue) !important;
-  background: var(--color-white) !important;
-  font-family: var(--font-family) !important;
-  font-size: 1rem !important;
-  line-height: 1.4 !important;
-  box-shadow: none !important;
-  transition: border-color 250ms ease, box-shadow 250ms ease !important;
-}
-
-.mailerlite-form-shell input[type="text"]:focus,
-.mailerlite-form-shell input[type="email"]:focus {
-  border-color: var(--color-blue) !important;
-  outline: 3px solid rgba(255, 206, 27, 0.55) !important;
-  outline-offset: 0 !important;
-}
-
-.mailerlite-form-shell .ml-form-embedSubmit {
-  width: 100% !important;
-  margin: 0 !important;
-}
-
-.mailerlite-form-shell .ml-form-embedSubmit button.primary {
-  display: inline-flex !important;
-  align-items: center !important;
-  justify-content: center !important;
-  width: 100% !important;
-  min-height: 50px !important;
-  padding: 0.85rem 1.25rem !important;
-  border: 2px solid var(--color-yellow) !important;
-  border-radius: 999px !important;
-  color: var(--color-blue) !important;
-  background: var(--color-yellow) !important;
-  font-family: var(--font-heading) !important;
-  font-size: 0.78rem !important;
-  font-weight: 900 !important;
-  letter-spacing: 0.055em !important;
-  line-height: 1.2 !important;
-  text-transform: uppercase !important;
-  box-shadow: 0 12px 30px rgba(228, 180, 0, 0.18) !important;
-  cursor: pointer !important;
-  transition: transform 350ms cubic-bezier(0.22, 1, 0.36, 1), box-shadow 350ms ease, background 350ms ease !important;
-}
-
-.mailerlite-form-shell .ml-form-embedSubmit button.primary:hover {
-  background: #f7c817 !important;
-  box-shadow: 0 16px 36px rgba(228, 180, 0, 0.24) !important;
-  transform: translateY(-2px) !important;
-}
-
-.mailerlite-form-shell .ml-form-successBody {
-  padding: 1.25rem !important;
-  border-left: 4px solid var(--color-yellow) !important;
-  border-radius: 0 var(--radius-small) var(--radius-small) 0 !important;
-  background: var(--color-sky) !important;
-}
-
-.mailerlite-form-shell .ml-form-successContent h4,
-.mailerlite-form-shell .ml-form-successContent p,
-.mailerlite-form-shell .ml-form-successContent a {
-  color: var(--color-blue) !important;
-  font-family: var(--font-family) !important;
-}
-
-.mailerlite-form-shell .ml-form-successContent h4 {
-  font-family: var(--font-heading) !important;
-}
-
-.freebie-privacy-note {
-  margin: 0.85rem 0 0;
-  color: var(--color-muted);
-  font-size: 0.78rem;
-  line-height: 1.5;
-}
-
-.freebie-privacy-note a {
-  font-weight: 700;
-}
-
-@media (max-width: 767px) {
-  .mailerlite-form-shell .ml-form-embedSubmit button.primary {
-    font-size: 0.72rem !important;
-  }
-}
+/* MAILERLITE PREMIUM DESIGN OVERRIDES */
+#zuckerdetox .mailerlite-form-shell,#fruehstuecksideen .mailerlite-form-shell{width:100%;margin-top:auto;padding-top:clamp(1.5rem,3vw,2rem)}
+#zuckerdetox .ml-embedded,#fruehstuecksideen .ml-embedded{width:100%}
+#zuckerdetox .ml-form-embedContainer,#fruehstuecksideen .ml-form-embedContainer,#zuckerdetox .ml-form-align-center,#fruehstuecksideen .ml-form-align-center,#zuckerdetox .ml-form-embedWrapper,#fruehstuecksideen .ml-form-embedWrapper,#zuckerdetox .ml-form-embedBody,#fruehstuecksideen .ml-form-embedBody{display:block!important;width:100%!important;max-width:none!important;margin:0!important;padding:0!important;border:0!important;border-radius:0!important;background:transparent!important;box-shadow:none!important}
+#zuckerdetox .ml-form-embedContent,#fruehstuecksideen .ml-form-embedContent{display:none!important}
+#zuckerdetox .ml-block-form,#fruehstuecksideen .ml-block-form,#zuckerdetox .ml-form-formContent,#fruehstuecksideen .ml-form-formContent{width:100%!important;margin:0!important;padding:0!important}
+#zuckerdetox .ml-form-fieldRow,#fruehstuecksideen .ml-form-fieldRow{width:100%!important;margin:0 0 1rem!important;padding:0!important}
+#zuckerdetox .ml-form-fieldRow:last-child,#fruehstuecksideen .ml-form-fieldRow:last-child{margin-bottom:1.25rem!important}
+#zuckerdetox .ml-field-group,#fruehstuecksideen .ml-field-group{width:100%!important;text-align:left!important}
+#zuckerdetox .ml-form-fieldRow input[type="text"],#zuckerdetox .ml-form-fieldRow input[type="email"],#fruehstuecksideen .ml-form-fieldRow input[type="text"],#fruehstuecksideen .ml-form-fieldRow input[type="email"]{display:block!important;width:100%!important;max-width:none!important;min-height:52px!important;margin:0!important;padding:.9rem 1rem!important;border:2px solid rgba(24,59,86,.28)!important;border-radius:14px!important;color:var(--color-blue)!important;background:#fff!important;font-family:var(--font-family)!important;font-size:1rem!important;font-weight:500!important;line-height:1.35!important;box-shadow:0 6px 18px rgba(24,59,86,.06)!important;appearance:none!important;transition:border-color .24s ease,box-shadow .24s ease,transform .24s ease!important}
+#zuckerdetox .ml-form-fieldRow input::placeholder,#fruehstuecksideen .ml-form-fieldRow input::placeholder{color:#778896!important;opacity:1!important}
+#zuckerdetox .ml-form-fieldRow input:focus,#fruehstuecksideen .ml-form-fieldRow input:focus{border-color:var(--color-blue)!important;outline:3px solid rgba(255,206,27,.42)!important;outline-offset:1px!important;box-shadow:0 10px 24px rgba(24,59,86,.11)!important;transform:translateY(-1px)!important}
+#zuckerdetox .ml-form-embedSubmit,#fruehstuecksideen .ml-form-embedSubmit{float:none!important;width:100%!important;margin:0!important;padding:0!important}
+#zuckerdetox .ml-form-embedSubmit button.primary,#fruehstuecksideen .ml-form-embedSubmit button.primary{display:inline-flex!important;align-items:center!important;justify-content:center!important;width:100%!important;min-height:52px!important;margin:0!important;padding:.9rem 1.25rem!important;border:2px solid var(--color-yellow)!important;border-radius:999px!important;color:var(--color-blue)!important;background:var(--color-yellow)!important;font-family:var(--font-heading)!important;font-size:.78rem!important;font-weight:900!important;letter-spacing:.055em!important;line-height:1.2!important;text-align:center!important;text-transform:uppercase!important;box-shadow:0 12px 30px rgba(228,180,0,.2)!important;cursor:pointer!important;transition:transform .35s cubic-bezier(.22,1,.36,1),box-shadow .35s ease,background .35s ease!important}
+#zuckerdetox .ml-form-embedSubmit button.primary:hover,#fruehstuecksideen .ml-form-embedSubmit button.primary:hover{color:var(--color-blue)!important;background:#f7c817!important;box-shadow:0 16px 36px rgba(228,180,0,.28)!important;transform:translateY(-2px)!important}
+#zuckerdetox .ml-form-embedSubmit button.loading,#fruehstuecksideen .ml-form-embedSubmit button.loading{min-height:52px!important;border-radius:999px!important;background:var(--color-yellow)!important}
+#zuckerdetox .ml-form-embedSubmitLoad:after,#fruehstuecksideen .ml-form-embedSubmitLoad:after{border-color:var(--color-blue) var(--color-blue) var(--color-blue) transparent!important}
+#zuckerdetox .ml-form-successBody,#fruehstuecksideen .ml-form-successBody{width:100%!important;max-width:none!important;margin:0!important;padding:1.5rem!important;border:1px solid rgba(24,59,86,.12)!important;border-left:5px solid var(--color-yellow)!important;border-radius:0 18px 18px 0!important;background:var(--color-sky)!important;box-shadow:0 10px 30px rgba(24,59,86,.08)!important}
+#zuckerdetox .ml-form-successContent,#fruehstuecksideen .ml-form-successContent{margin:0!important;text-align:left!important}
+#zuckerdetox .ml-form-successContent h4,#fruehstuecksideen .ml-form-successContent h4{margin:0 0 .75rem!important;color:var(--color-blue)!important;font-family:var(--font-heading)!important;font-size:clamp(1.25rem,3vw,1.7rem)!important;font-weight:800!important;line-height:1.2!important}
+#zuckerdetox .ml-form-successContent p,#fruehstuecksideen .ml-form-successContent p,#zuckerdetox .ml-form-successContent a,#fruehstuecksideen .ml-form-successContent a{color:var(--color-blue)!important;font-family:var(--font-family)!important;font-size:.95rem!important;line-height:1.65!important}
+.freebie-privacy-note{margin:.85rem 0 0;color:var(--color-muted);font-size:.76rem;line-height:1.5;text-align:left}.freebie-privacy-note a{color:var(--color-blue);font-weight:800}
+@media(max-width:767px){#zuckerdetox .ml-form-embedSubmit button.primary,#fruehstuecksideen .ml-form-embedSubmit button.primary{padding-inline:1rem!important;font-size:.72rem!important}}
