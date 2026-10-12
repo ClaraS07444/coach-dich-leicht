@@ -1618,26 +1618,152 @@ body#startseite {
 }
 
 
-/* MAILERLITE PREMIUM DESIGN OVERRIDES */
-#zuckerdetox .mailerlite-form-shell,#fruehstuecksideen .mailerlite-form-shell{width:100%;margin-top:auto;padding-top:clamp(1.5rem,3vw,2rem)}
-#zuckerdetox .ml-embedded,#fruehstuecksideen .ml-embedded{width:100%}
-#zuckerdetox .ml-form-embedContainer,#fruehstuecksideen .ml-form-embedContainer,#zuckerdetox .ml-form-align-center,#fruehstuecksideen .ml-form-align-center,#zuckerdetox .ml-form-embedWrapper,#fruehstuecksideen .ml-form-embedWrapper,#zuckerdetox .ml-form-embedBody,#fruehstuecksideen .ml-form-embedBody{display:block!important;width:100%!important;max-width:none!important;margin:0!important;padding:0!important;border:0!important;border-radius:0!important;background:transparent!important;box-shadow:none!important}
-#zuckerdetox .ml-form-embedContent,#fruehstuecksideen .ml-form-embedContent{display:none!important}
-#zuckerdetox .ml-block-form,#fruehstuecksideen .ml-block-form,#zuckerdetox .ml-form-formContent,#fruehstuecksideen .ml-form-formContent{width:100%!important;margin:0!important;padding:0!important}
-#zuckerdetox .ml-form-fieldRow,#fruehstuecksideen .ml-form-fieldRow{width:100%!important;margin:0 0 1rem!important;padding:0!important}
-#zuckerdetox .ml-form-fieldRow:last-child,#fruehstuecksideen .ml-form-fieldRow:last-child{margin-bottom:1.25rem!important}
-#zuckerdetox .ml-field-group,#fruehstuecksideen .ml-field-group{width:100%!important;text-align:left!important}
-#zuckerdetox .ml-form-fieldRow input[type="text"],#zuckerdetox .ml-form-fieldRow input[type="email"],#fruehstuecksideen .ml-form-fieldRow input[type="text"],#fruehstuecksideen .ml-form-fieldRow input[type="email"]{display:block!important;width:100%!important;max-width:none!important;min-height:52px!important;margin:0!important;padding:.9rem 1rem!important;border:2px solid rgba(24,59,86,.28)!important;border-radius:14px!important;color:var(--color-blue)!important;background:#fff!important;font-family:var(--font-family)!important;font-size:1rem!important;font-weight:500!important;line-height:1.35!important;box-shadow:0 6px 18px rgba(24,59,86,.06)!important;appearance:none!important;transition:border-color .24s ease,box-shadow .24s ease,transform .24s ease!important}
-#zuckerdetox .ml-form-fieldRow input::placeholder,#fruehstuecksideen .ml-form-fieldRow input::placeholder{color:#778896!important;opacity:1!important}
-#zuckerdetox .ml-form-fieldRow input:focus,#fruehstuecksideen .ml-form-fieldRow input:focus{border-color:var(--color-blue)!important;outline:3px solid rgba(255,206,27,.42)!important;outline-offset:1px!important;box-shadow:0 10px 24px rgba(24,59,86,.11)!important;transform:translateY(-1px)!important}
-#zuckerdetox .ml-form-embedSubmit,#fruehstuecksideen .ml-form-embedSubmit{float:none!important;width:100%!important;margin:0!important;padding:0!important}
-#zuckerdetox .ml-form-embedSubmit button.primary,#fruehstuecksideen .ml-form-embedSubmit button.primary{display:inline-flex!important;align-items:center!important;justify-content:center!important;width:100%!important;min-height:52px!important;margin:0!important;padding:.9rem 1.25rem!important;border:2px solid var(--color-yellow)!important;border-radius:999px!important;color:var(--color-blue)!important;background:var(--color-yellow)!important;font-family:var(--font-heading)!important;font-size:.78rem!important;font-weight:900!important;letter-spacing:.055em!important;line-height:1.2!important;text-align:center!important;text-transform:uppercase!important;box-shadow:0 12px 30px rgba(228,180,0,.2)!important;cursor:pointer!important;transition:transform .35s cubic-bezier(.22,1,.36,1),box-shadow .35s ease,background .35s ease!important}
-#zuckerdetox .ml-form-embedSubmit button.primary:hover,#fruehstuecksideen .ml-form-embedSubmit button.primary:hover{color:var(--color-blue)!important;background:#f7c817!important;box-shadow:0 16px 36px rgba(228,180,0,.28)!important;transform:translateY(-2px)!important}
-#zuckerdetox .ml-form-embedSubmit button.loading,#fruehstuecksideen .ml-form-embedSubmit button.loading{min-height:52px!important;border-radius:999px!important;background:var(--color-yellow)!important}
-#zuckerdetox .ml-form-embedSubmitLoad:after,#fruehstuecksideen .ml-form-embedSubmitLoad:after{border-color:var(--color-blue) var(--color-blue) var(--color-blue) transparent!important}
-#zuckerdetox .ml-form-successBody,#fruehstuecksideen .ml-form-successBody{width:100%!important;max-width:none!important;margin:0!important;padding:1.5rem!important;border:1px solid rgba(24,59,86,.12)!important;border-left:5px solid var(--color-yellow)!important;border-radius:0 18px 18px 0!important;background:var(--color-sky)!important;box-shadow:0 10px 30px rgba(24,59,86,.08)!important}
-#zuckerdetox .ml-form-successContent,#fruehstuecksideen .ml-form-successContent{margin:0!important;text-align:left!important}
-#zuckerdetox .ml-form-successContent h4,#fruehstuecksideen .ml-form-successContent h4{margin:0 0 .75rem!important;color:var(--color-blue)!important;font-family:var(--font-heading)!important;font-size:clamp(1.25rem,3vw,1.7rem)!important;font-weight:800!important;line-height:1.2!important}
-#zuckerdetox .ml-form-successContent p,#fruehstuecksideen .ml-form-successContent p,#zuckerdetox .ml-form-successContent a,#fruehstuecksideen .ml-form-successContent a{color:var(--color-blue)!important;font-family:var(--font-family)!important;font-size:.95rem!important;line-height:1.65!important}
-.freebie-privacy-note{margin:.85rem 0 0;color:var(--color-muted);font-size:.76rem;line-height:1.5;text-align:left}.freebie-privacy-note a{color:var(--color-blue);font-weight:800}
-@media(max-width:767px){#zuckerdetox .ml-form-embedSubmit button.primary,#fruehstuecksideen .ml-form-embedSubmit button.primary{padding-inline:1rem!important;font-size:.72rem!important}}
+/* CUSTOM FREEBIE FORMS */
+.custom-freebie-form-shell {
+  width: 100%;
+  margin-top: auto;
+  padding-top: clamp(1.5rem, 3vw, 2rem);
+}
+
+.custom-freebie-form {
+  display: grid;
+  gap: 1rem;
+  width: 100%;
+  margin: 0;
+}
+
+.custom-form-field {
+  display: grid;
+  gap: 0.45rem;
+}
+
+.custom-form-field label {
+  color: var(--color-blue);
+  font-family: var(--font-family);
+  font-size: 0.88rem;
+  font-weight: 800;
+  line-height: 1.4;
+}
+
+.custom-form-field input {
+  width: 100%;
+  min-height: 54px;
+  margin: 0;
+  padding: 0.9rem 1rem;
+  border: 2px solid rgba(24, 59, 86, 0.24);
+  border-radius: 14px;
+  color: var(--color-blue);
+  background: var(--color-white);
+  font-family: var(--font-family);
+  font-size: 1rem;
+  font-weight: 500;
+  line-height: 1.35;
+  box-shadow: 0 8px 22px rgba(24, 59, 86, 0.07);
+  transition: border-color 240ms ease, box-shadow 240ms ease, transform 240ms ease;
+}
+
+.custom-form-field input::placeholder {
+  color: #7c8c98;
+  opacity: 1;
+}
+
+.custom-form-field input:hover {
+  border-color: rgba(24, 59, 86, 0.45);
+}
+
+.custom-form-field input:focus {
+  border-color: var(--color-blue);
+  outline: 3px solid rgba(255, 206, 27, 0.42);
+  outline-offset: 1px;
+  box-shadow: 0 12px 28px rgba(24, 59, 86, 0.12);
+  transform: translateY(-1px);
+}
+
+.custom-form-field input[aria-invalid="true"] {
+  border-color: var(--color-error);
+  outline-color: rgba(163, 33, 33, 0.18);
+}
+
+.custom-field-error {
+  min-height: 1.2em;
+  color: var(--color-error);
+  font-size: 0.78rem;
+  font-weight: 700;
+}
+
+.custom-freebie-submit {
+  position: relative;
+  width: 100%;
+  margin-top: 0.25rem;
+  overflow: hidden;
+}
+
+.custom-freebie-submit.is-loading {
+  pointer-events: none;
+}
+
+.custom-submit-loader {
+  display: none;
+  width: 18px;
+  height: 18px;
+  border: 3px solid rgba(24, 59, 86, 0.28);
+  border-top-color: var(--color-blue);
+  border-radius: 50%;
+  animation: custom-form-spin 0.8s linear infinite;
+}
+
+.custom-freebie-submit.is-loading .custom-submit-label {
+  display: none;
+}
+
+.custom-freebie-submit.is-loading .custom-submit-loader {
+  display: block;
+}
+
+@keyframes custom-form-spin {
+  to { transform: rotate(360deg); }
+}
+
+.custom-form-status {
+  min-height: 1.4em;
+  margin: 0;
+  font-size: 0.86rem;
+  font-weight: 800;
+  line-height: 1.5;
+}
+
+.custom-form-status.is-success {
+  padding: 1rem 1.1rem;
+  border-left: 4px solid var(--color-yellow);
+  border-radius: 0 14px 14px 0;
+  color: var(--color-blue);
+  background: var(--color-sky);
+}
+
+.custom-form-status.is-error {
+  color: var(--color-error);
+}
+
+.mailerlite-submit-target {
+  display: none;
+}
+
+.freebie-privacy-note {
+  margin: 0.85rem 0 0;
+  color: var(--color-muted);
+  font-size: 0.76rem;
+  line-height: 1.5;
+  text-align: left;
+}
+
+.freebie-privacy-note a {
+  color: var(--color-blue);
+  font-weight: 800;
+}
+
+@media (max-width: 767px) {
+  .custom-freebie-submit {
+    padding-inline: 1rem;
+    font-size: 0.72rem;
+  }
+}

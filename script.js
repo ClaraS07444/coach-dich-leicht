@@ -12,6 +12,7 @@ document.addEventListener("DOMContentLoaded", () => {
   initSmoothScroll();
   initCarousel();
   initForms();
+  initCustomFreebieForms();
   initInteractiveFaq();
   setCurrentYear();
   initGsapSafely();
@@ -193,6 +194,60 @@ function clearFormErrors(form) {
     status.className = "form-status";
     status.textContent = "";
   }
+}
+
+/* ---------------------------
+   Custom MailerLite freebie forms
+   --------------------------- */
+function initCustomFreebieForms() {
+  document.querySelectorAll("[data-mailerlite-custom-form]").forEach((form) => {
+    const submitButton = form.querySelector(".custom-freebie-submit");
+    const status = form.querySelector(".custom-form-status");
+    const email = form.querySelector('input[type="email"]');
+    const targetName = form.getAttribute("target");
+    const targetFrame = document.querySelector(`iframe[name="${targetName}"]`);
+    let submitted = false;
+
+    form.addEventListener("submit", (event) => {
+      form.querySelectorAll(".custom-field-error").forEach((item) => {
+        item.textContent = "";
+      });
+      form.querySelectorAll('[aria-invalid="true"]').forEach((field) => {
+        field.removeAttribute("aria-invalid");
+      });
+      status.className = "custom-form-status";
+      status.textContent = "";
+
+      if (!form.checkValidity()) {
+        event.preventDefault();
+        const invalid = form.querySelector(":invalid");
+        invalid?.setAttribute("aria-invalid", "true");
+        const error = invalid?.closest(".custom-form-field")?.querySelector(".custom-field-error");
+        if (error) {
+          error.textContent = invalid?.validity.typeMismatch
+            ? "Bitte gib eine gültige E-Mail-Adresse ein."
+            : "Bitte fülle dieses Pflichtfeld aus.";
+        }
+        invalid?.focus();
+        return;
+      }
+
+      submitted = true;
+      submitButton?.classList.add("is-loading");
+      submitButton?.setAttribute("aria-busy", "true");
+      if (email) email.value = email.value.trim();
+    });
+
+    targetFrame?.addEventListener("load", () => {
+      if (!submitted) return;
+      submitted = false;
+      submitButton?.classList.remove("is-loading");
+      submitButton?.removeAttribute("aria-busy");
+      status.className = "custom-form-status is-success";
+      status.textContent = form.dataset.successMessage || "Danke! Bitte prüfe jetzt dein E-Mail-Postfach.";
+      form.reset();
+    });
+  });
 }
 
 function initInteractiveFaq(){const quiz=document.querySelector("[data-faq-quiz]");if(!quiz)return;const slides=[...quiz.querySelectorAll("[data-quiz-slide]")],result=quiz.querySelector("[data-quiz-result]"),resultText=quiz.querySelector("[data-result-text]"),bar=quiz.querySelector("[data-progress-bar]"),answers=new Array(slides.length).fill(null);let step=0;const show=panel=>{[...slides,result].forEach(x=>x.hidden=x!==panel);if(window.gsap&&!matchMedia("(prefers-reduced-motion: reduce)").matches)gsap.fromTo(panel,{autoAlpha:0,y:14},{autoAlpha:1,y:0,duration:.65,ease:"sine.out",clearProps:"transform,opacity,visibility"});};const progress=n=>bar.style.width=`${n/slides.length*100}%`;slides.forEach((slide,i)=>{const choices=[...slide.querySelectorAll("[data-answer]")],box=slide.querySelector("[data-quiz-response]"),yes=slide.querySelector(".faq-response-yes"),no=slide.querySelector(".faq-response-no"),next=slide.querySelector("[data-quiz-next]");choices.forEach(btn=>btn.addEventListener("click",()=>{answers[i]=btn.dataset.answer;choices.forEach(x=>x.setAttribute("aria-pressed",String(x===btn)));yes.hidden=btn.dataset.answer!=="yes";no.hidden=btn.dataset.answer!=="no";box.hidden=false;next.hidden=false;progress(i+1);}));next.addEventListener("click",()=>{if(!answers[i])return;if(i===slides.length-1){const n=answers.filter(x=>x==="yes").length;resultText.textContent=n>=6?`Du hast ${n} Fragen mit Ja beantwortet. Eine persönliche Begleitung könnte sehr gut zu deiner aktuellen Situation passen.`:n>=3?`Du hast ${n} Fragen mit Ja beantwortet. Reset28 oder ein Kennenlerngespräch können dir helfen, den passenden nächsten Schritt zu finden.`:`Du hast ${n} Fragen mit Ja beantwortet. Auch wenn aktuell nur wenige Punkte zutreffen, kannst du deine Fragen unverbindlich im Kennenlerngespräch klären.`;show(result);}else{step=i+1;show(slides[step]);}});});quiz.querySelector("[data-quiz-restart]").addEventListener("click",()=>{answers.fill(null);slides.forEach(slide=>{slide.querySelectorAll("[data-answer]").forEach(b=>b.setAttribute("aria-pressed","false"));slide.querySelector("[data-quiz-response]").hidden=true;slide.querySelector("[data-quiz-next]").hidden=true;});progress(0);show(slides[0]);});progress(0);show(slides[0]);}
