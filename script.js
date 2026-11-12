@@ -5,13 +5,10 @@
    Navigation, carousel, forms and GSAP animations
    ========================================================= */
 
-document.documentElement.classList.add("js");
-
 document.addEventListener("DOMContentLoaded", () => {
   initMobileNavigation();
-  initSmoothScroll();
+  initHomeLinks();
   initCarousel();
-  initForms();
   initCustomFreebieForms();
   initInteractiveFaq();
   setCurrentYear();
@@ -54,33 +51,17 @@ function initMobileNavigation() {
 }
 
 /* ---------------------------
-   Smooth internal scrolling
+   Startseite links
+   Other anchors scroll natively (CSS scroll-behavior), which also moves
+   focus for the skip link and respects reduced motion.
    --------------------------- */
-function initSmoothScroll() {
-  document.querySelectorAll('a[href^="#"]').forEach((link) => {
+function initHomeLinks() {
+  document.querySelectorAll('a[href="#startseite"]').forEach((link) => {
     link.addEventListener("click", (event) => {
-      const selector = link.getAttribute("href");
-      if (!selector || selector === "#") return;
-
       event.preventDefault();
-
-      if (selector === "#startseite") {
-        window.scrollTo({
-          top: 0,
-          left: 0,
-          behavior: "smooth"
-        });
-        history.replaceState(null, "", window.location.pathname + window.location.search);
-        return;
-      }
-
-      const target = document.querySelector(selector);
-      if (!target) return;
-
-      target.scrollIntoView({
-        behavior: "smooth",
-        block: "start"
-      });
+      const reduceMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+      window.scrollTo({ top: 0, left: 0, behavior: reduceMotion ? "auto" : "smooth" });
+      history.replaceState(null, "", window.location.pathname + window.location.search);
     });
   });
 }
@@ -104,96 +85,34 @@ function initCarousel() {
     return card.getBoundingClientRect().width + gap;
   };
 
-  previousButton?.addEventListener("click", () => {
-    track.scrollBy({ left: -getScrollAmount(), behavior: "smooth" });
-  });
+  const scrollByCards = (direction) => {
+    track.scrollBy({ left: direction * getScrollAmount(), behavior: "smooth" });
+  };
 
-  nextButton?.addEventListener("click", () => {
-    track.scrollBy({ left: getScrollAmount(), behavior: "smooth" });
-  });
+  const updateButtons = () => {
+    const maxScroll = track.scrollWidth - track.clientWidth - 2;
+    if (previousButton) previousButton.disabled = track.scrollLeft <= 2;
+    if (nextButton) nextButton.disabled = track.scrollLeft >= maxScroll;
+  };
+
+  previousButton?.addEventListener("click", () => scrollByCards(-1));
+  nextButton?.addEventListener("click", () => scrollByCards(1));
 
   track.addEventListener("keydown", (event) => {
     if (event.key === "ArrowLeft") {
       event.preventDefault();
-      track.scrollBy({ left: -getScrollAmount(), behavior: "smooth" });
+      scrollByCards(-1);
     }
 
     if (event.key === "ArrowRight") {
       event.preventDefault();
-      track.scrollBy({ left: getScrollAmount(), behavior: "smooth" });
-    }
-  });
-}
-
-/* ---------------------------
-   Form validation
-   The final submission endpoint must be configured before launch.
-   --------------------------- */
-function initForms() {
-  document.querySelectorAll("form").forEach((form) => {
-    form.addEventListener("submit", (event) => {
-      clearFormErrors(form);
-
-      if (!form.checkValidity()) {
-        event.preventDefault();
-        showFormErrors(form);
-        form.querySelector(":invalid")?.focus();
-        return;
-      }
-
-      if (form.dataset.unconfigured === "true" || !form.getAttribute("action")) {
-        event.preventDefault();
-        const status = form.querySelector(".form-status");
-        if (status) {
-          status.className = "form-status is-error";
-          status.textContent = "Das Formular ist vorbereitet, aber der Versand muss vor der Veröffentlichung noch mit dem gewählten Formularanbieter verbunden werden.";
-        }
-      }
-    });
-  });
-}
-
-function showFormErrors(form) {
-  form.querySelectorAll("input, textarea, select").forEach((field) => {
-    if (field.validity.valid) return;
-
-    field.setAttribute("aria-invalid", "true");
-    const error = field.closest(".form-field")?.querySelector(".field-error");
-    if (!error) return;
-
-    if (field.validity.valueMissing) {
-      error.textContent = "Bitte fülle dieses Pflichtfeld aus.";
-    } else if (field.validity.typeMismatch) {
-      error.textContent = "Bitte gib eine gültige E-Mail-Adresse ein.";
-    } else {
-      error.textContent = "Bitte überprüfe deine Eingabe.";
+      scrollByCards(1);
     }
   });
 
-  const uncheckedPrivacy = form.querySelector('input[type="checkbox"][required]:not(:checked)');
-  if (uncheckedPrivacy) {
-    const status = form.querySelector(".form-status");
-    if (status) {
-      status.className = "form-status is-error";
-      status.textContent = "Bitte bestätige die Datenschutzerklärung.";
-    }
-  }
-}
-
-function clearFormErrors(form) {
-  form.querySelectorAll('[aria-invalid="true"]').forEach((field) => {
-    field.removeAttribute("aria-invalid");
-  });
-
-  form.querySelectorAll(".field-error").forEach((error) => {
-    error.textContent = "";
-  });
-
-  const status = form.querySelector(".form-status");
-  if (status) {
-    status.className = "form-status";
-    status.textContent = "";
-  }
+  track.addEventListener("scroll", updateButtons, { passive: true });
+  window.addEventListener("resize", updateButtons);
+  updateButtons();
 }
 
 /* ---------------------------
@@ -259,6 +178,10 @@ function setCurrentYear() {
   if (year) year.textContent = String(new Date().getFullYear());
 }
 
+function showAllContent() {
+  document.documentElement.classList.remove("anim-pending");
+}
+
 /* ---------------------------
    GSAP safety wrapper
    Content remains visible if GSAP fails to load.
@@ -269,6 +192,7 @@ function initGsapSafely() {
 
   if (!gsapAvailable || !scrollTriggerAvailable) {
     console.warn("GSAP oder ScrollTrigger konnte nicht geladen werden. Alle Inhalte bleiben sichtbar.");
+    showAllContent();
     return;
   }
 
@@ -276,13 +200,13 @@ function initGsapSafely() {
 
   const reduceMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
   if (reduceMotion) {
-    window.gsap.set(
-      [".hero-logo", ".hero-text", ".hero-buttons", ".hero-cloud-left", ".hero-cloud-right", ".section-cloud", ".fade-up", ".slide-left", ".slide-right"],
-      { clearProps: "all" }
-    );
+    showAllContent();
     return;
   }
 
+  // Removing the class and creating the tweens happen in the same task,
+  // so the browser never paints the elements before GSAP hides them.
+  showAllContent();
   initHeroAnimation();
   initSectionCloudAnimations();
   initScrollAnimations();
@@ -293,171 +217,98 @@ function initGsapSafely() {
 }
 
 /* ---------------------------
+   Motion settings
+   One shared feel for every fly-in: quick start, long soft landing
+   ("power3.out"), and distances big enough that the element never crawls
+   pixel by pixel at the end (that crawl is what reads as jitter).
+   --------------------------- */
+const MOTION = {
+  ease: "power3.out",
+  duration: 1,
+  stagger: 0.12
+};
+
+/* ---------------------------
    Hero intro
    --------------------------- */
 function initHeroAnimation() {
-  const heroTimeline = window.gsap.timeline({
-    defaults: {
-      ease: "power2.out"
-    }
+  const gsap = window.gsap;
+  const isSmall = window.matchMedia("(max-width: 767px)").matches;
+  const heroTimeline = gsap.timeline({
+    defaults: { ease: MOTION.ease }
   });
 
   heroTimeline
-    .from(".hero-cloud-left", {
-      xPercent: -125,
-      opacity: 0,
-      duration: 2.4,
-      ease: "power1.out",
-      clearProps: "transform,opacity"
-    })
-    .from(
-      ".hero-cloud-right",
-      {
-        xPercent: 125,
-        opacity: 0,
-        duration: 2.4,
-        ease: "power2.out",
-        clearProps: "transform,opacity"
-      },
-      "<"
-    )
-    .from(
-      ".hero-logo",
-      {
-        y: 58,
-        opacity: 0,
-        scale: 0.985,
-        duration: 2.0,
-        ease: "power2.out",
-        clearProps: "transform,opacity"
-      },
-      "-=1.45"
-    )
-    .from(
-      ".hero-text",
-      {
-        y: 32,
-        opacity: 0,
-        duration: 1.7,
-        ease: "power2.out",
-        clearProps: "transform,opacity"
-      },
-      "-=1.15"
-    )
-    .from(
-      ".hero-buttons",
-      {
-        y: 22,
-        opacity: 0,
-        duration: 1.55,
-        ease: "power2.out",
-        clearProps: "transform,opacity"
-      },
-      "-=1.05"
-    );
+    .from(".hero-cloud-left", { xPercent: -80, autoAlpha: 0, duration: 1.6, clearProps: "transform,opacity,visibility" }, 0)
+    .from(".hero-cloud-right", { xPercent: 80, autoAlpha: 0, duration: 1.6, clearProps: "transform,opacity,visibility" }, 0)
+    // The logo only moves (no fade), so it is visible – and measurable as LCP – right away.
+    .from(".hero-logo", { y: isSmall ? 24 : 36, duration: 1.2, clearProps: "transform" }, 0)
+    .from(".hero-text", { y: isSmall ? 28 : 40, autoAlpha: 0, duration: MOTION.duration, clearProps: "transform,opacity,visibility" }, 0.25)
+    .from(".hero-buttons", { y: isSmall ? 20 : 28, autoAlpha: 0, duration: MOTION.duration, clearProps: "transform,opacity,visibility" }, 0.45);
 }
 
-
 /* ---------------------------
-   Decorative clouds in testimonials
+   Decorative section clouds
    --------------------------- */
 function initSectionCloudAnimations() {
   window.gsap.utils.toArray("section[id]").forEach((section) => {
-    const leftCloud = section.querySelector(".section-cloud-left");
-    const rightCloud = section.querySelector(".section-cloud-right");
+    const clouds = [section.querySelector(".section-cloud-left"), section.querySelector(".section-cloud-right")].filter(Boolean);
+    if (!clouds.length) return;
 
-    if (!leftCloud && !rightCloud) return;
-
-    const clouds = [leftCloud, rightCloud].filter(Boolean);
-    window.gsap.fromTo(
-      clouds,
-      {
-        autoAlpha: 0,
-        x: (index) => index === 0 ? -46 : 46
-      },
-      {
-        autoAlpha: 1,
-        x: 0,
-        duration: 3.2,
-        stagger: 0.08,
-        ease: "sine.out",
-        force3D: true,
-        overwrite: "auto",
-        scrollTrigger: {
-          trigger: section,
-          start: "top 84%",
-          once: true,
-          invalidateOnRefresh: true
-        },
-        onComplete: () => window.gsap.set(clouds, { clearProps: "transform,opacity,visibility" })
+    window.gsap.from(clouds, {
+      autoAlpha: 0,
+      x: (index) => index === 0 ? -60 : 60,
+      duration: 1.6,
+      stagger: 0.1,
+      ease: "power2.out",
+      clearProps: "transform,opacity,visibility",
+      scrollTrigger: {
+        trigger: section,
+        start: "top 85%",
+        once: true
       }
-    );
+    });
   });
 }
 
 /* ---------------------------
-   ScrollTrigger animations
+   Scroll fly-ins
+   Elements that enter the viewport together are animated as one batch
+   with a short stagger, so neighbours arrive in a smooth wave instead of
+   each starting on its own trigger.
    --------------------------- */
 function initScrollAnimations() {
-  const media = window.gsap.matchMedia();
+  const gsap = window.gsap;
+  const isSmall = window.matchMedia("(max-width: 767px)").matches;
+  const distance = isSmall ? 28 : 44;
+  const groups = [
+    { selector: ".fade-up", from: { y: distance } },
+    { selector: ".slide-left", from: { x: -distance * 1.4 } },
+    { selector: ".slide-right", from: { x: distance * 1.4 } }
+  ];
 
-  media.add("(max-width: 767px)", () => {
-    animateFadeUp(12, "top 94%", 2.2);
-    animateMediaReveal(".slide-left, .slide-right", 10, "top 94%", 2.4);
-  });
+  document.documentElement.classList.add("gsap-active");
 
-  media.add("(min-width: 768px)", () => {
-    animateFadeUp(15, "top 92%", 2.4);
-    animateMediaReveal(".slide-left, .slide-right", 12, "top 92%", 2.65);
-  });
-}
+  groups.forEach(({ selector, from }) => {
+    const elements = gsap.utils.toArray(selector);
+    if (!elements.length) return;
 
-function animateFadeUp(distance, start, duration) {
-  window.gsap.utils.toArray(".fade-up").forEach((element) => {
-    window.gsap.fromTo(
-      element,
-      { autoAlpha: 0, y: distance },
-      {
-        autoAlpha: 1,
+    gsap.set(elements, { ...from, autoAlpha: 0 });
+
+    window.ScrollTrigger.batch(elements, {
+      start: "top 88%",
+      once: true,
+      onEnter: (batch) => gsap.to(batch, {
+        x: 0,
         y: 0,
-        duration,
-        ease: "sine.out",
-        force3D: true,
-        overwrite: "auto",
-        scrollTrigger: {
-          trigger: element,
-          start,
-          once: true,
-          invalidateOnRefresh: true
-        },
-        onComplete: () => window.gsap.set(element, { clearProps: "transform,opacity,visibility" })
-      }
-    );
-  });
-}
-
-function animateMediaReveal(selector, distance, start, duration) {
-  window.gsap.utils.toArray(selector).forEach((element) => {
-    window.gsap.fromTo(
-      element,
-      { autoAlpha: 0, y: distance, scale: 0.995 },
-      {
         autoAlpha: 1,
-        y: 0,
-        scale: 1,
-        duration,
-        ease: "sine.out",
-        force3D: true,
-        overwrite: "auto",
-        scrollTrigger: {
-          trigger: element,
-          start,
-          once: true,
-          invalidateOnRefresh: true
-        },
-        onComplete: () => window.gsap.set(element, { clearProps: "transform,opacity,visibility" })
-      }
-    );
+        duration: MOTION.duration,
+        ease: MOTION.ease,
+        stagger: MOTION.stagger,
+        overwrite: true,
+        clearProps: "transform,opacity,visibility",
+        onComplete: () => batch.forEach((element) => element.classList.add("is-revealed"))
+      })
+    });
   });
 }
-

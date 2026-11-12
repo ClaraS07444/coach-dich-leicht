@@ -463,7 +463,10 @@ article {
   display: flex;
   gap: var(--space-4);
   overflow-x: auto;
-  padding: 0.5rem 0.25rem 1.5rem;
+  /* No horizontal padding: it made the track snap-scroll on load,
+     which Chrome treats as a scroll and stops measuring LCP. */
+  padding: 0.5rem 0 1.5rem;
+  scroll-padding-inline: 0.25rem;
   scroll-behavior: smooth;
   scroll-snap-type: x mandatory;
   scrollbar-color: var(--color-blue) rgba(255, 255, 255, 0.5);
@@ -965,11 +968,10 @@ h3 {
   font-size: clamp(1.05rem, 2vw, 1.28rem);
 }
 
+/* Solid header: a backdrop blur has to be recomputed on every scroll frame */
 .site-header {
-  background: rgba(24, 59, 86, 0.94);
+  background: rgba(24, 59, 86, 0.97);
   box-shadow: 0 1px 0 rgba(255, 255, 255, 0.15);
-  backdrop-filter: blur(18px);
-  -webkit-backdrop-filter: blur(18px);
 }
 
 .button {
@@ -1024,7 +1026,6 @@ h3 {
   height: clamp(70px, 10vw, 130px);
   border-radius: 999px;
   background: var(--color-cloud);
-  filter: blur(0.2px);
   opacity: 0.9;
 }
 
@@ -1249,10 +1250,8 @@ h3 {
   padding: clamp(1.5rem, 4vw, 3.5rem);
   border: 1px solid rgba(24, 59, 86, 0.1);
   border-radius: var(--radius-large);
-  background: rgba(255, 255, 255, 0.78);
+  background: rgba(255, 255, 255, 0.86);
   box-shadow: var(--shadow-small);
-  backdrop-filter: blur(18px);
-  -webkit-backdrop-filter: blur(18px);
 }
 
 .interview-copy p:not(.eyebrow) {
@@ -1413,21 +1412,6 @@ h3 {
   object-position: center;
 }
 
-/* Stable transforms prevent layout jumps while GSAP starts. */
-.story-media,
-.story-card,
-.pillar-card,
-.testimonial-card,
-.offer-card,
-.offer-intro,
-.interview-card,
-.contact-copy,
-.section-heading {
-  backface-visibility: hidden;
-  transform: translateZ(0);
-  will-change: auto;
-}
-
 /* Every content section receives a consistent cloud pair. */
 .about-section,
 .pillars-section,
@@ -1456,8 +1440,6 @@ h3 {
   border-radius: 999px;
   opacity: 0.55;
   pointer-events: none;
-  backface-visibility: hidden;
-  transform: translateZ(0);
 }
 
 .section-cloud-left {
@@ -1766,4 +1748,102 @@ body#startseite {
     padding-inline: 1rem;
     font-size: 0.72rem;
   }
+}
+
+
+/* =========================================================
+   PERFORMANCE & ACCESSIBILITY PASS
+   ========================================================= */
+
+/* Hidden until GSAP takes over (see inline script in <head>) */
+.anim-pending .hero-text,
+.anim-pending .hero-buttons,
+.anim-pending .hero-cloud,
+.anim-pending .section-cloud,
+.anim-pending .fade-up,
+.anim-pending .slide-left,
+.anim-pending .slide-right {
+  opacity: 0;
+}
+
+/* Pillar numbers: darker gold for readable contrast (WCAG AA) */
+.pillar-number {
+  color: #8a6400;
+}
+
+/* Certificate: lightweight preview image linking to the PDF */
+.certificate-preview {
+  display: block;
+  max-width: 640px;
+  min-height: 0;
+  transition: box-shadow 400ms ease, transform 400ms cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.certificate-preview img {
+  width: 100%;
+  height: auto;
+}
+
+.certificate-preview:hover {
+  box-shadow: var(--shadow-medium);
+  transform: translateY(-3px);
+}
+
+/* While GSAP flies an element in, its own CSS transitions (e.g. the pillar
+   hover lift) must not chase the animated values – that caused the jitter. */
+.gsap-active .fade-up:not(.is-revealed),
+.gsap-active .slide-left:not(.is-revealed),
+.gsap-active .slide-right:not(.is-revealed) {
+  transition: none !important;
+}
+
+/* Skip link target */
+main:focus {
+  outline: none;
+}
+
+/* Carousel arrows sit as far out as possible without leaving the viewport */
+.carousel-button--prev {
+  left: max(-24px, calc((100% - 100vw) / 2 + 12px));
+}
+
+.carousel-button--next {
+  right: max(-24px, calc((100% - 100vw) / 2 + 12px));
+}
+
+.carousel-button:disabled {
+  cursor: default;
+  opacity: 0.35;
+}
+
+/* Legal pages (Impressum, Datenschutz) */
+.legal-page {
+  max-width: 820px;
+}
+
+.legal-page h1 {
+  font-size: clamp(2rem, 5vw, 3.2rem);
+}
+
+.legal-page h2 {
+  margin-top: var(--space-6);
+  font-size: clamp(1.3rem, 3vw, 1.8rem);
+}
+
+.legal-page a {
+  word-break: break-word;
+}
+
+.placeholder {
+  padding: 0 0.25em;
+  border-radius: 4px;
+  background: var(--color-yellow);
+  font-weight: 700;
+}
+
+.legal-note {
+  padding: var(--space-3) var(--space-4);
+  border-left: 5px solid var(--color-yellow);
+  border-radius: 0 var(--radius-small) var(--radius-small) 0;
+  background: var(--color-sky);
 }
