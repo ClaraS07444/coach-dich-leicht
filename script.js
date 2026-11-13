@@ -289,6 +289,16 @@ function initScrollAnimations() {
 
   document.documentElement.classList.add("gsap-active");
 
+  // An anchor target that is still offset for its fly-in would be scrolled to
+  // its shifted position. Drop the offset on click so the jump lands exactly;
+  // the element then only fades in.
+  document.querySelectorAll('a[href^="#"]').forEach((link) => {
+    link.addEventListener("click", () => {
+      const target = document.getElementById(link.getAttribute("href").slice(1));
+      if (target && !target.classList.contains("is-revealed")) gsap.set(target, { x: 0, y: 0 });
+    });
+  });
+
   groups.forEach(({ selector, from }) => {
     const elements = gsap.utils.toArray(selector);
     if (!elements.length) return;

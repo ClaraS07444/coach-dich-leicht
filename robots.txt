@@ -1,0 +1,5 @@
+User-agent: *
+Allow: /
+Disallow: /archiv/
+
+Sitemap: https://DEINE-DOMAIN.de/sitemap.xml
