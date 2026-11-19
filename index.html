@@ -72,7 +72,7 @@
         },
         {
           "@type": "EducationalOccupationalCredential",
-          "name": "Fachkrankenschwester für Intensivpflege",
+          "name": "Intensivfachschwester",
           "credentialCategory": "Berufsausbildung"
         }
       ],
@@ -124,7 +124,7 @@
           {
             "@type": "Offer",
             "name": "1:1 Premium Coaching „Schlank mit Leichtigkeit“",
-            "description": "4 Monate persönliche Begleitung mit 9 Einzel-Calls",
+            "description": "4 Monate persönliche Begleitung mit 9 persönlichen Calls",
             "url": "https://DEINE-DOMAIN.de/#premium-coaching",
             "priceSpecification": {
               "@type": "PriceSpecification",
@@ -189,7 +189,7 @@
           "name": "Was ist der Unterschied zwischen Reset28 und dem 1:1 Premium Coaching?",
           "acceptedAnswer": {
             "@type": "Answer",
-            "text": "Reset28 ist ein 28-Tage-Programm mit Wochenplänen, Einkaufs- und Eiweißlisten, 2 Live-Calls und Austausch in der Community. Das 1:1 Premium Coaching „Schlank mit Leichtigkeit“ ist eine persönliche Begleitung über 4 Monate mit 9 Einzel-Calls, unbegrenztem Support per WhatsApp oder Telegram und einem persönlichen Toolkit."
+            "text": "Reset28 ist ein 28-Tage-Programm mit Wochenplänen, Einkaufs- und Eiweißlisten, 2 Live-Calls und Austausch in der Community. Das 1:1 Premium Coaching „Schlank mit Leichtigkeit“ ist eine persönliche Begleitung über 4 Monate mit 9 persönlichen Calls, unbegrenztem Support per WhatsApp oder Telegram und einem persönlichen Toolkit."
           }
         },
         {
@@ -205,7 +205,7 @@
           "name": "Wie läuft das kostenlose Kennenlerngespräch ab?",
           "acceptedAnswer": {
             "@type": "Answer",
-            "text": "Du buchst dir über Calendly einen Termin von etwa 30 Minuten. Wir schauen gemeinsam, wo du gerade stehst, was dich beschäftigt und welches Angebot zu dir passt – ganz unverbindlich."
+            "text": "Du buchst dir über Calendly einen kostenlosen Termin von 30 Minuten, das Gespräch findet per Zoom-Videocall statt. Wir schauen gemeinsam, wo du gerade stehst, was dich beschäftigt und welches Angebot zu dir passt – ganz unverbindlich."
           }
         },
         {
@@ -234,11 +234,11 @@
 <link as="font" crossorigin="" href="fonts/dm-sans.woff2" rel="preload" type="font/woff2"/>
 <link href="style.css" rel="stylesheet"/>
 <script>
-  /* Versteckt animierte Elemente bis GSAP bereit ist (verhindert Flackern).
+  /* Aktiviert die Einflug-Animationen (verhindert Flackern beim Laden).
      Fallback: nach 2,5 s wird alles sichtbar, falls script.js nicht lädt. */
   if (!window.matchMedia("(prefers-reduced-motion: reduce)").matches) {
-    document.documentElement.classList.add("anim-pending");
-    setTimeout(() => document.documentElement.classList.remove("anim-pending"), 2500);
+    document.documentElement.classList.add("motion-ready");
+    window.__motionFallback = setTimeout(() => document.documentElement.classList.remove("motion-ready"), 2500);
   }
 </script>
 </head>
@@ -313,7 +313,7 @@
 </article>
 <article class="story-row story-row-reverse">
 <figure class="story-media slide-right">
-<img alt="Miriam sitzt nachdenklich in einem gelben Sessel" decoding="async" height="1498" loading="lazy" sizes="(min-width: 1200px) 520px, (min-width: 768px) 45vw, 100vw" src="bilder/miri-sessel-nah-600.webp" srcset="bilder/miri-sessel-nah-600.webp 600w, bilder/miri-sessel-nah-1000.webp 1000w" width="1000"/>
+<img alt="Miriam sitzt lächelnd in einem gelben Sessel und blickt nach unten" decoding="async" height="1498" loading="lazy" sizes="(min-width: 1200px) 520px, (min-width: 768px) 45vw, 100vw" src="bilder/miri-sessel-nah-600.webp" srcset="bilder/miri-sessel-nah-600.webp 600w, bilder/miri-sessel-nah-1000.webp 1000w" width="1000"/>
 </figure>
 <div class="story-text fade-up">
 <h3>Meine Überzeugung</h3>
@@ -387,7 +387,7 @@
 <article class="testimonial-card"><p class="testimonial-result">−10 kg in 3 Monaten</p><p>„Liebe Miriam, ich habe mittlerweile in 3 Monaten 10 kg abgenommen. Ich habe wieder eine schöne Taille, passe wieder in meine Lieblingsklamotten und bekomme Komplimente. Die Tagespläne helfen dabei, das Thema Essen vom Kopf aufs Papier zu bringen. Jetzt trage ich wieder Jeans und Co. und bin stolz, dass viele wieder gut sitzen.“</p></article>
 <article class="testimonial-card"><p class="testimonial-result">−5 kg in 6 Wochen</p><p>„Nach den ersten 6 Wochen mit Miriams Coaching habe ich schon 5 kg abgenommen. Das Tolle an dem Konzept ist, dass man lernt, seine Gefühle über seine Gedanken zu lenken. Das macht nicht nur den Körper leichter, sondern auch den Kopf. Und Miri schafft es immer, einen positiv zu motivieren!“</p></article>
 <article class="testimonial-card"><p class="testimonial-result">Leicht und ohne Verzicht</p><p>„Ich bin sehr froh, dass ich mich für das Coaching entschieden habe. Miriam ist sehr sympathisch und wir hatten direkt einen guten Draht. Ich habe viel Hintergrundwissen und nützliche Maßnahmen bekommen. Es geht leicht und ohne Verzicht oder Kalorienzählen. Ich kann das Coaching nur empfehlen.“</p></article>
-<article class="testimonial-card"><p class="testimonial-result">Achtsamer mit mir und dem Essen</p><p>„Was ich total schön fand, ist, dass du dich nicht nur auf Ernährung und Essen fokussiert hast, sondern einen Weg gefunden hast, damit wir achtsamer mit uns und unserer Einstellung zum Essen umgehen. Viele tolle Ansätze motivieren mich weiterhin, weiterzumachen!“</p></article>
+<article class="testimonial-card"><p class="testimonial-result">Achtsamer mit sich und dem Essen</p><p>„Was ich total schön fand, ist, dass du dich nicht nur auf Ernährung und Essen fokussiert hast, sondern einen Weg gefunden hast, damit wir achtsamer mit uns und unserer Einstellung zum Essen umgehen. Viele tolle Ansätze motivieren mich weiterhin, weiterzumachen!“</p></article>
 <article class="testimonial-card"><p class="testimonial-result">−2 kg in 13 Tagen</p><p>„Die Ergebnisse nach diesen 13 Tagen sind: ein besseres Körpergefühl, ein respektvoller und wertschätzender Umgang mit mir, meinem Körper und meinen Gefühlen – und das Beste: 2 kg! Danke dafür!“</p></article>
 <article class="testimonial-card"><p class="testimonial-result">−6 kg in 7 Wochen</p><p>„Dank Miriams Hilfe habe ich in nur 7 Wochen 6 Kilo an Gewicht verloren! Miriam gibt viele wertvolle Tipps, die leicht umzusetzen sind und auch noch Spaß machen. Probiert es aus – Miriam hilft, wo sie nur kann!“</p></article>
 </div>
@@ -402,7 +402,7 @@
 <p class="section-lead">Ob persönliche Begleitung, klarer 28-Tage-Neustart oder kostenloser Einstieg: Wähle den Weg, der zu deinem Alltag und deinem aktuellen Ziel passt.</p>
 </header>
 <nav aria-label="Angebote im Überblick" class="offer-overview fade-up">
-<a class="overview-tile" href="#premium-coaching"><span class="label">Persönliche Begleitung</span><strong>1:1 Premium Coaching</strong><span class="overview-meta">4 Monate · 9 Einzel-Calls</span><span class="overview-price">ab 620 €</span></a>
+<a class="overview-tile" href="#premium-coaching"><span class="label">Persönliche Begleitung</span><strong>1:1 Premium Coaching</strong><span class="overview-meta">4 Monate · 9 persönliche Calls</span><span class="overview-price">ab 620 €</span></a>
 <a class="overview-tile" href="#reset28"><span class="label">28 Tage für deinen Neustart</span><strong>Reset28</strong><span class="overview-meta">Wochenpläne · 2 Live-Calls · Community</span><span class="overview-price">246 €</span></a>
 <a class="overview-tile" href="#zuckerdetox"><span class="label">Kostenloser Einstieg</span><strong>Zuckerdetox &amp; Frühstücksideen</strong><span class="overview-meta">Zwei Hefte per E-Mail</span><span class="overview-price">0 €</span></a>
 </nav>
@@ -497,7 +497,7 @@
 <p class="freebie-privacy-note">Mit der Anmeldung akzeptierst du die Verarbeitung deiner Angaben gemäß der <a href="datenschutz.html">Datenschutzerklärung</a>.</p>
 </div>
 </article><article class="freebie-card fade-up" id="fruehstuecksideen">
-<div aria-hidden="true" class="freebie-cover cover-sky"><span class="freebie-cover-kicker">9 Rezepte · 30+ g Eiweiß</span><span class="freebie-cover-title">Frühstücks&shy;ideen</span><span class="freebie-cover-brand">coachdichleicht</span></div>
+<div aria-hidden="true" class="freebie-cover cover-sky"><span class="freebie-cover-kicker">9 Ideen · 30+ g Eiweiß</span><span class="freebie-cover-title">Frühstücks&shy;ideen</span><span class="freebie-cover-brand">coachdichleicht</span></div>
 <p class="label">Kostenlos</p>
 <h3>Frühstücksideen für Frauen ab 40</h3>
 <p>Starte satt und entspannt in den Tag: Entdecke 9 einfache Frühstücksideen mit 30+ g Eiweiß, die lange sättigen und sich unkompliziert in deinen Alltag integrieren lassen. Ohne Proteinpulver, ohne Kalorienzählen und ohne Diätdruck.</p>
@@ -538,9 +538,9 @@
 <details class="faq-item"><summary>Für wen ist dein Coaching gedacht?</summary><p>Für Frauen ab 40, die in den Wechseljahren stecken oder kurz davor sind und merken, dass Abnehmen, Energie und Ernährung plötzlich anders funktionieren als früher – und die genug von Diäten haben.</p></details>
 <details class="faq-item"><summary>Muss ich Kalorien zählen oder eine Diät machen?</summary><p>Nein. Wir arbeiten ohne Diät, ohne Verbote und ohne Kalorienzählen. Stattdessen lernst du, wie Hormone, Blutzucker, Nervensystem und Gewohnheiten zusammenspielen – und wie du satt wirst und Heißhunger in den Griff bekommst.</p></details>
 <details class="faq-item"><summary>Findet das Coaching online oder in Aachen statt?</summary><p>Das Coaching findet komplett online per Videocall statt – ganz bequem von zu Hause, egal wo du wohnst. Termine vor Ort gibt es nicht.</p></details>
-<details class="faq-item"><summary>Was ist der Unterschied zwischen Reset28 und dem 1:1 Premium Coaching?</summary><p>Reset28 ist ein 28-Tage-Programm mit Wochenplänen, Einkaufs- und Eiweißlisten, 2 Live-Calls und Austausch in der Community. Das 1:1 Premium Coaching „Schlank mit Leichtigkeit“ ist eine persönliche Begleitung über 4 Monate mit 9 Einzel-Calls, unbegrenztem Support per WhatsApp oder Telegram und einem persönlichen Toolkit.</p></details>
+<details class="faq-item"><summary>Was ist der Unterschied zwischen Reset28 und dem 1:1 Premium Coaching?</summary><p>Reset28 ist ein 28-Tage-Programm mit Wochenplänen, Einkaufs- und Eiweißlisten, 2 Live-Calls und Austausch in der Community. Das 1:1 Premium Coaching „Schlank mit Leichtigkeit“ ist eine persönliche Begleitung über 4 Monate mit 9 persönlichen Calls, unbegrenztem Support per WhatsApp oder Telegram und einem persönlichen Toolkit.</p></details>
 <details class="faq-item"><summary>Was kostet das Coaching?</summary><p>Reset28 kostet 246 €. Das 1:1 Premium Coaching gibt es ab 620 € – Umfang und Konditionen besprechen wir passend zu deiner Situation im kostenlosen Kennenlerngespräch. Das Zuckerdetox-Handbuch und die Frühstücksideen sind kostenlos.</p></details>
-<details class="faq-item"><summary>Wie läuft das kostenlose Kennenlerngespräch ab?</summary><p>Du buchst dir über Calendly einen Termin von etwa 30 Minuten. Wir schauen gemeinsam, wo du gerade stehst, was dich beschäftigt und welches Angebot zu dir passt – ganz unverbindlich.</p></details>
+<details class="faq-item"><summary>Wie läuft das kostenlose Kennenlerngespräch ab?</summary><p>Du buchst dir über Calendly einen kostenlosen Termin von 30 Minuten, das Gespräch findet per Zoom-Videocall statt. Wir schauen gemeinsam, wo du gerade stehst, was dich beschäftigt und welches Angebot zu dir passt – ganz unverbindlich.</p></details>
 <details class="faq-item"><summary>Welche Qualifikation hast du?</summary><p>Ich bin seit fast 30 Jahren Intensivfachschwester und zertifizierter Life Coach der The Life Coach School. Dieses medizinische Körperwissen verbinde ich mit Coaching zu Ernährung, Nervensystem und Mindset – spezialisiert auf Frauen ab 40.</p></details>
 <details class="faq-item"><summary>Ersetzt das Coaching eine ärztliche Behandlung?</summary><p>Nein. Das Coaching ersetzt keine ärztliche Diagnose oder Behandlung. Wenn du gesundheitliche Beschwerden hast oder Medikamente nimmst, sprich Veränderungen bitte mit deiner Ärztin oder deinem Arzt ab.</p></details>
 </div>
@@ -552,7 +552,7 @@
 <h2 id="contact-title">Lass uns kennenlernen</h2>
 <p>Du möchtest herausfinden, welches Angebot am besten zu dir passt? Dann buche dir ganz unverbindlich ein kostenloses Kennenlerngespräch.</p>
 <a class="button button-primary button-large" href="https://calendly.com/coachdichleicht/30min" rel="noopener noreferrer" target="_blank">Kostenloses Kennenlerngespräch buchen</a>
-<ul class="contact-facts"><li>Kostenlos</li><li>ca. 30 Minuten</li><li>per Videocall</li></ul>
+<ul class="contact-facts"><li>Kostenlos</li><li>30 Minuten</li><li>per Zoom-Videocall</li></ul>
 </div>
 </section>
 </main>
@@ -575,8 +575,6 @@
 </nav>
 </div>
 </footer>
-<script defer src="vendor/gsap.min.js"></script>
-<script defer src="vendor/ScrollTrigger.min.js"></script>
 <script defer src="script.js"></script>
 </body>
 </html>

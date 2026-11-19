@@ -1611,23 +1611,93 @@ main:focus {
   background: var(--sky);
 }
 
-/* ---------- Animation support ---------- */
-/* Hidden until GSAP takes over (see inline script in <head>) */
-.anim-pending .hero-text .eyebrow,
-.anim-pending .hero-buttons,
-.anim-pending .hero-facts,
-.anim-pending .fade-up,
-.anim-pending .slide-left,
-.anim-pending .slide-right {
-  opacity: 0;
+/* ---------- Motion ----------
+   Fly-ins animate `translate` and `opacity` only (compositor-friendly).
+   Hover effects use `transform`, so the two never interfere.
+   Hidden start states apply only while <html> has .motion-ready, which the
+   inline script in <head> sets – without JavaScript everything is visible. */
+@keyframes reveal {
+  from {
+    opacity: 0;
+    translate: var(--reveal-from);
+  }
+
+  to {
+    opacity: 1;
+    translate: 0 0;
+  }
 }
 
-/* While GSAP flies an element in, its own CSS transitions must not chase
-   the animated values – that caused visible jitter. */
-.gsap-active .fade-up:not(.is-revealed),
-.gsap-active .slide-left:not(.is-revealed),
-.gsap-active .slide-right:not(.is-revealed) {
-  transition: none !important;
+@keyframes rise {
+  from {
+    translate: 0 var(--rise-distance);
+  }
+
+  to {
+    translate: 0 0;
+  }
+}
+
+:root {
+  --ease-out: cubic-bezier(0.22, 1, 0.36, 1);
+  --reveal-distance: 44px;
+  --rise-distance: 26px;
+}
+
+.fade-up {
+  --reveal-from: 0 var(--reveal-distance);
+}
+
+.slide-left {
+  --reveal-from: calc(var(--reveal-distance) * -1.4) 0;
+}
+
+.slide-right {
+  --reveal-from: calc(var(--reveal-distance) * 1.4) 0;
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  .motion-ready .fade-up:not(.is-revealed),
+  .motion-ready .slide-left:not(.is-revealed),
+  .motion-ready .slide-right:not(.is-revealed) {
+    opacity: 0;
+  }
+
+  .motion-ready .is-revealed {
+    animation: reveal 1s var(--ease-out) var(--reveal-delay, 0s) backwards;
+  }
+
+  /* Hero: headline, intro and portrait are visible at once and only glide
+     (they are the largest elements and must count as painted immediately). */
+  .motion-ready .hero-text h1,
+  .motion-ready .hero-subline,
+  .motion-ready .hero-portrait img {
+    animation: rise 1.1s var(--ease-out) backwards;
+  }
+
+  .motion-ready .hero-subline {
+    animation-delay: 0.08s;
+  }
+
+  .motion-ready .hero-text .eyebrow,
+  .motion-ready .hero-buttons,
+  .motion-ready .hero-facts,
+  .motion-ready .hero-badge {
+    --reveal-from: 0 22px;
+    animation: reveal 1s var(--ease-out) backwards;
+  }
+
+  .motion-ready .hero-buttons {
+    animation-delay: 0.2s;
+  }
+
+  .motion-ready .hero-facts {
+    animation-delay: 0.3s;
+  }
+
+  .motion-ready .hero-badge {
+    animation-delay: 0.6s;
+  }
 }
 
 /* ---------- Tablet ---------- */
@@ -1767,6 +1837,11 @@ main:focus {
 }
 
 @media (max-width: 767px) {
+  :root {
+    --reveal-distance: 28px;
+    --rise-distance: 18px;
+  }
+
   .hero-portrait {
     width: min(82%, 360px);
   }

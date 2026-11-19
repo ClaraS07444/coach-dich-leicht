@@ -2,7 +2,7 @@
 
 /* =========================================================
    COACH DICH LEICHT – SCRIPT.JS
-   Navigation, carousel, forms and GSAP animations
+   Navigation, carousel, forms and scroll reveals
    ========================================================= */
 
 document.addEventListener("DOMContentLoaded", () => {
@@ -12,7 +12,7 @@ document.addEventListener("DOMContentLoaded", () => {
   initCustomFreebieForms();
   initInteractiveFaq();
   setCurrentYear();
-  initGsapSafely();
+  initScrollReveals();
 });
 
 /* ---------------------------
@@ -189,7 +189,7 @@ function initCustomFreebieForms() {
   });
 }
 
-function initInteractiveFaq(){const quiz=document.querySelector("[data-faq-quiz]");if(!quiz)return;const slides=[...quiz.querySelectorAll("[data-quiz-slide]")],result=quiz.querySelector("[data-quiz-result]"),resultText=quiz.querySelector("[data-result-text]"),bar=quiz.querySelector("[data-progress-bar]"),answers=new Array(slides.length).fill(null);let step=0;const show=panel=>{[...slides,result].forEach(x=>x.hidden=x!==panel);if(window.gsap&&!matchMedia("(prefers-reduced-motion: reduce)").matches)gsap.fromTo(panel,{autoAlpha:0,y:14},{autoAlpha:1,y:0,duration:.65,ease:"sine.out",clearProps:"transform,opacity,visibility"});};const progress=n=>bar.style.width=`${n/slides.length*100}%`;slides.forEach((slide,i)=>{const choices=[...slide.querySelectorAll("[data-answer]")],box=slide.querySelector("[data-quiz-response]"),yes=slide.querySelector(".faq-response-yes"),no=slide.querySelector(".faq-response-no"),next=slide.querySelector("[data-quiz-next]");choices.forEach(btn=>btn.addEventListener("click",()=>{answers[i]=btn.dataset.answer;choices.forEach(x=>x.setAttribute("aria-pressed",String(x===btn)));yes.hidden=btn.dataset.answer!=="yes";no.hidden=btn.dataset.answer!=="no";box.hidden=false;next.hidden=false;progress(i+1);}));next.addEventListener("click",()=>{if(!answers[i])return;if(i===slides.length-1){const n=answers.filter(x=>x==="yes").length;resultText.textContent=n>=6?`Du hast ${n} Fragen mit Ja beantwortet. Eine persönliche Begleitung könnte sehr gut zu deiner aktuellen Situation passen.`:n>=3?`Du hast ${n} Fragen mit Ja beantwortet. Reset28 oder ein Kennenlerngespräch können dir helfen, den passenden nächsten Schritt zu finden.`:`Du hast ${n} Fragen mit Ja beantwortet. Auch wenn aktuell nur wenige Punkte zutreffen, kannst du deine Fragen unverbindlich im Kennenlerngespräch klären.`;show(result);}else{step=i+1;show(slides[step]);}});});quiz.querySelector("[data-quiz-restart]").addEventListener("click",()=>{answers.fill(null);slides.forEach(slide=>{slide.querySelectorAll("[data-answer]").forEach(b=>b.setAttribute("aria-pressed","false"));slide.querySelector("[data-quiz-response]").hidden=true;slide.querySelector("[data-quiz-next]").hidden=true;});progress(0);show(slides[0]);});progress(0);show(slides[0]);}
+function initInteractiveFaq(){const quiz=document.querySelector("[data-faq-quiz]");if(!quiz)return;const slides=[...quiz.querySelectorAll("[data-quiz-slide]")],result=quiz.querySelector("[data-quiz-result]"),resultText=quiz.querySelector("[data-result-text]"),bar=quiz.querySelector("[data-progress-bar]"),answers=new Array(slides.length).fill(null);let step=0;const show=panel=>{[...slides,result].forEach(x=>x.hidden=x!==panel);if(!matchMedia("(prefers-reduced-motion: reduce)").matches)panel.animate([{opacity:0,translate:"0 14px"},{opacity:1,translate:"0 0"}],{duration:650,easing:"cubic-bezier(0.22, 1, 0.36, 1)"});};const progress=n=>bar.style.width=`${n/slides.length*100}%`;slides.forEach((slide,i)=>{const choices=[...slide.querySelectorAll("[data-answer]")],box=slide.querySelector("[data-quiz-response]"),yes=slide.querySelector(".faq-response-yes"),no=slide.querySelector(".faq-response-no"),next=slide.querySelector("[data-quiz-next]");choices.forEach(btn=>btn.addEventListener("click",()=>{answers[i]=btn.dataset.answer;choices.forEach(x=>x.setAttribute("aria-pressed",String(x===btn)));yes.hidden=btn.dataset.answer!=="yes";no.hidden=btn.dataset.answer!=="no";box.hidden=false;next.hidden=false;progress(i+1);}));next.addEventListener("click",()=>{if(!answers[i])return;if(i===slides.length-1){const n=answers.filter(x=>x==="yes").length;resultText.textContent=n>=6?`Du hast ${n} Fragen mit Ja beantwortet. Eine persönliche Begleitung könnte sehr gut zu deiner aktuellen Situation passen.`:n>=3?`Du hast ${n} Fragen mit Ja beantwortet. Reset28 oder ein Kennenlerngespräch können dir helfen, den passenden nächsten Schritt zu finden.`:`Du hast ${n} Fragen mit Ja beantwortet. Auch wenn aktuell nur wenige Punkte zutreffen, kannst du deine Fragen unverbindlich im Kennenlerngespräch klären.`;show(result);}else{step=i+1;show(slides[step]);}});});quiz.querySelector("[data-quiz-restart]").addEventListener("click",()=>{answers.fill(null);slides.forEach(slide=>{slide.querySelectorAll("[data-answer]").forEach(b=>b.setAttribute("aria-pressed","false"));slide.querySelector("[data-quiz-response]").hidden=true;slide.querySelector("[data-quiz-next]").hidden=true;});progress(0);show(slides[0]);});progress(0);show(slides[0]);}
 /* ---------------------------
    Footer year
    --------------------------- */
@@ -198,119 +198,39 @@ function setCurrentYear() {
   if (year) year.textContent = String(new Date().getFullYear());
 }
 
-function showAllContent() {
-  document.documentElement.classList.remove("anim-pending");
-}
-
 /* ---------------------------
-   GSAP safety wrapper
-   Content remains visible if GSAP fails to load.
+   Scroll reveals
+   The browser reports when an element enters the viewport; the fly-in itself
+   is a CSS keyframe animation on `translate` and `opacity` (see style.css), so
+   it runs on the compositor and never fights hover transitions on `transform`.
+   Elements arriving together get a short stagger and land as a gentle wave.
    --------------------------- */
-function initGsapSafely() {
-  const gsapAvailable = typeof window.gsap !== "undefined";
-  const scrollTriggerAvailable = typeof window.ScrollTrigger !== "undefined";
-
-  if (!gsapAvailable || !scrollTriggerAvailable) {
-    console.warn("GSAP oder ScrollTrigger konnte nicht geladen werden. Alle Inhalte bleiben sichtbar.");
-    showAllContent();
-    return;
-  }
-
-  window.gsap.registerPlugin(window.ScrollTrigger);
+function initScrollReveals() {
+  const root = document.documentElement;
+  clearTimeout(window.__motionFallback);
 
   const reduceMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
-  if (reduceMotion) {
-    showAllContent();
+  if (reduceMotion || !("IntersectionObserver" in window)) {
+    root.classList.remove("motion-ready");
     return;
   }
 
-  // Removing the class and creating the tweens happen in the same task,
-  // so the browser never paints the elements before GSAP hides them.
-  showAllContent();
-  initHeroAnimation();
-  initScrollAnimations();
+  const observer = new IntersectionObserver((entries) => {
+    const entering = entries
+      .filter((entry) => entry.isIntersecting)
+      .map((entry) => entry.target)
+      .sort((a, b) => {
+        const ra = a.getBoundingClientRect();
+        const rb = b.getBoundingClientRect();
+        return ra.top - rb.top || ra.left - rb.left;
+      });
 
-  window.addEventListener("load", () => {
-    window.ScrollTrigger.refresh();
-  });
-}
-
-/* ---------------------------
-   Motion settings
-   One shared feel for every fly-in: quick start, long soft landing
-   ("power3.out"), and distances big enough that the element never crawls
-   pixel by pixel at the end (that crawl is what reads as jitter).
-   --------------------------- */
-const MOTION = {
-  ease: "power3.out",
-  duration: 1,
-  stagger: 0.12
-};
-
-/* ---------------------------
-   Hero intro
-   --------------------------- */
-function initHeroAnimation() {
-  const gsap = window.gsap;
-  const isSmall = window.matchMedia("(max-width: 767px)").matches;
-
-  gsap.timeline({ defaults: { ease: MOTION.ease } })
-    // Headline, intro text and portrait only move (no fade): they are the
-    // largest elements, so they must be visible – and measurable as LCP – at once.
-    .from([".hero-text h1", ".hero-subline"], { y: isSmall ? 18 : 26, duration: 1.1, stagger: 0.08, clearProps: "transform" }, 0)
-    .from(".hero-portrait img", { y: isSmall ? 20 : 28, duration: 1.3, clearProps: "transform" }, 0)
-    .from([".hero-text .eyebrow", ".hero-buttons", ".hero-facts"], { y: isSmall ? 18 : 24, autoAlpha: 0, duration: MOTION.duration, stagger: 0.1, clearProps: "transform,opacity,visibility" }, 0.1)
-    .from(".hero-badge", { y: 16, autoAlpha: 0, duration: 0.8, clearProps: "transform,opacity,visibility" }, 0.6);
-}
-
-/* ---------------------------
-   Scroll fly-ins
-   Elements that enter the viewport together are animated as one batch
-   with a short stagger, so neighbours arrive in a smooth wave instead of
-   each starting on its own trigger.
-   --------------------------- */
-function initScrollAnimations() {
-  const gsap = window.gsap;
-  const isSmall = window.matchMedia("(max-width: 767px)").matches;
-  const distance = isSmall ? 28 : 44;
-  const groups = [
-    { selector: ".fade-up", from: { y: distance } },
-    { selector: ".slide-left", from: { x: -distance * 1.4 } },
-    { selector: ".slide-right", from: { x: distance * 1.4 } }
-  ];
-
-  document.documentElement.classList.add("gsap-active");
-
-  // An anchor target that is still offset for its fly-in would be scrolled to
-  // its shifted position. Drop the offset on click so the jump lands exactly;
-  // the element then only fades in.
-  document.querySelectorAll('a[href^="#"]').forEach((link) => {
-    link.addEventListener("click", () => {
-      const target = document.getElementById(link.getAttribute("href").slice(1));
-      if (target && !target.classList.contains("is-revealed")) gsap.set(target, { x: 0, y: 0 });
+    entering.forEach((element, index) => {
+      element.style.setProperty("--reveal-delay", `${Math.min(index, 5) * 0.12}s`);
+      element.classList.add("is-revealed");
+      observer.unobserve(element);
     });
-  });
+  }, { rootMargin: "0px 0px -12% 0px" });
 
-  groups.forEach(({ selector, from }) => {
-    const elements = gsap.utils.toArray(selector);
-    if (!elements.length) return;
-
-    gsap.set(elements, { ...from, autoAlpha: 0 });
-
-    window.ScrollTrigger.batch(elements, {
-      start: "top 88%",
-      once: true,
-      onEnter: (batch) => gsap.to(batch, {
-        x: 0,
-        y: 0,
-        autoAlpha: 1,
-        duration: MOTION.duration,
-        ease: MOTION.ease,
-        stagger: MOTION.stagger,
-        overwrite: true,
-        clearProps: "transform,opacity,visibility",
-        onComplete: () => batch.forEach((element) => element.classList.add("is-revealed"))
-      })
-    });
-  });
+  document.querySelectorAll(".fade-up, .slide-left, .slide-right").forEach((element) => observer.observe(element));
 }
