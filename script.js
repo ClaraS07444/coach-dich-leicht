@@ -123,48 +123,68 @@ function initCustomFreebieForms() {
     const submitButton = form.querySelector(".custom-freebie-submit");
     const status = form.querySelector(".custom-form-status");
     const email = form.querySelector('input[type="email"]');
-    const targetName = form.getAttribute("target");
-    const targetFrame = document.querySelector(`iframe[name="${targetName}"]`);
-    let submitted = false;
 
-    form.addEventListener("submit", (event) => {
-      form.querySelectorAll(".custom-field-error").forEach((item) => {
-        item.textContent = "";
-      });
-      form.querySelectorAll('[aria-invalid="true"]').forEach((field) => {
-        field.removeAttribute("aria-invalid");
-      });
-      status.className = "custom-form-status";
-      status.textContent = "";
+    const setStatus = (type, message) => {
+      status.className = type ? `custom-form-status is-${type}` : "custom-form-status";
+      status.textContent = message;
+    };
+
+    const setLoading = (isLoading) => {
+      submitButton?.classList.toggle("is-loading", isLoading);
+      if (isLoading) submitButton?.setAttribute("aria-busy", "true");
+      else submitButton?.removeAttribute("aria-busy");
+    };
+
+    const showFieldError = (field, message) => {
+      field.setAttribute("aria-invalid", "true");
+      const error = field.closest(".custom-form-field")?.querySelector(".custom-field-error");
+      if (error) error.textContent = message;
+      field.focus();
+    };
+
+    const succeed = () => {
+      setLoading(false);
+      setStatus("success", form.dataset.successMessage || "Danke! Bitte prüfe jetzt dein E-Mail-Postfach.");
+      form.reset();
+    };
+
+    form.addEventListener("submit", async (event) => {
+      event.preventDefault();
+      form.querySelectorAll(".custom-field-error").forEach((item) => { item.textContent = ""; });
+      form.querySelectorAll('[aria-invalid="true"]').forEach((field) => field.removeAttribute("aria-invalid"));
+      setStatus("", "");
+      if (email) email.value = email.value.trim();
 
       if (!form.checkValidity()) {
-        event.preventDefault();
         const invalid = form.querySelector(":invalid");
-        invalid?.setAttribute("aria-invalid", "true");
-        const error = invalid?.closest(".custom-form-field")?.querySelector(".custom-field-error");
-        if (error) {
-          error.textContent = invalid?.validity.typeMismatch
-            ? "Bitte gib eine gültige E-Mail-Adresse ein."
-            : "Bitte fülle dieses Pflichtfeld aus.";
-        }
-        invalid?.focus();
+        showFieldError(invalid, invalid.validity.typeMismatch ? "Bitte gib eine gültige E-Mail-Adresse ein." : "Bitte fülle dieses Pflichtfeld aus.");
         return;
       }
 
-      submitted = true;
-      submitButton?.classList.add("is-loading");
-      submitButton?.setAttribute("aria-busy", "true");
-      if (email) email.value = email.value.trim();
-    });
+      // Preview builds have no action: nothing is sent anywhere.
+      if (!form.getAttribute("action")) {
+        setStatus("success", "Vorschau: Hier wird nichts gesendet. Auf der echten Seite geht die Anmeldung an MailerLite.");
+        return;
+      }
 
-    targetFrame?.addEventListener("load", () => {
-      if (!submitted) return;
-      submitted = false;
-      submitButton?.classList.remove("is-loading");
-      submitButton?.removeAttribute("aria-busy");
-      status.className = "custom-form-status is-success";
-      status.textContent = form.dataset.successMessage || "Danke! Bitte prüfe jetzt dein E-Mail-Postfach.";
-      form.reset();
+      setLoading(true);
+      try {
+        const response = await fetch(form.action, { method: "POST", body: new FormData(form), headers: { Accept: "application/json" } });
+        const result = await response.json();
+        if (result.success) {
+          succeed();
+          return;
+        }
+        setLoading(false);
+        if (result.errors?.fields?.email && email) {
+          showFieldError(email, "Bitte gib eine gültige E-Mail-Adresse ein.");
+        } else {
+          setStatus("error", "Die Anmeldung hat leider nicht geklappt. Bitte versuche es in ein paar Minuten noch einmal.");
+        }
+      } catch (error) {
+        setLoading(false);
+        setStatus("error", "Die Verbindung hat nicht geklappt. Bitte prüfe deine Internetverbindung und versuche es noch einmal.");
+      }
     });
   });
 }
@@ -208,7 +228,6 @@ function initGsapSafely() {
   // so the browser never paints the elements before GSAP hides them.
   showAllContent();
   initHeroAnimation();
-  initSectionCloudAnimations();
   initScrollAnimations();
 
   window.addEventListener("load", () => {
@@ -234,41 +253,14 @@ const MOTION = {
 function initHeroAnimation() {
   const gsap = window.gsap;
   const isSmall = window.matchMedia("(max-width: 767px)").matches;
-  const heroTimeline = gsap.timeline({
-    defaults: { ease: MOTION.ease }
-  });
 
-  heroTimeline
-    .from(".hero-cloud-left", { xPercent: -80, autoAlpha: 0, duration: 1.6, clearProps: "transform,opacity,visibility" }, 0)
-    .from(".hero-cloud-right", { xPercent: 80, autoAlpha: 0, duration: 1.6, clearProps: "transform,opacity,visibility" }, 0)
-    // The logo only moves (no fade), so it is visible – and measurable as LCP – right away.
-    .from(".hero-logo", { y: isSmall ? 24 : 36, duration: 1.2, clearProps: "transform" }, 0)
-    .from(".hero-text", { y: isSmall ? 28 : 40, autoAlpha: 0, duration: MOTION.duration, clearProps: "transform,opacity,visibility" }, 0.25)
-    .from(".hero-buttons", { y: isSmall ? 20 : 28, autoAlpha: 0, duration: MOTION.duration, clearProps: "transform,opacity,visibility" }, 0.45);
-}
-
-/* ---------------------------
-   Decorative section clouds
-   --------------------------- */
-function initSectionCloudAnimations() {
-  window.gsap.utils.toArray("section[id]").forEach((section) => {
-    const clouds = [section.querySelector(".section-cloud-left"), section.querySelector(".section-cloud-right")].filter(Boolean);
-    if (!clouds.length) return;
-
-    window.gsap.from(clouds, {
-      autoAlpha: 0,
-      x: (index) => index === 0 ? -60 : 60,
-      duration: 1.6,
-      stagger: 0.1,
-      ease: "power2.out",
-      clearProps: "transform,opacity,visibility",
-      scrollTrigger: {
-        trigger: section,
-        start: "top 85%",
-        once: true
-      }
-    });
-  });
+  gsap.timeline({ defaults: { ease: MOTION.ease } })
+    // Headline, intro text and portrait only move (no fade): they are the
+    // largest elements, so they must be visible – and measurable as LCP – at once.
+    .from([".hero-text h1", ".hero-subline"], { y: isSmall ? 18 : 26, duration: 1.1, stagger: 0.08, clearProps: "transform" }, 0)
+    .from(".hero-portrait img", { y: isSmall ? 20 : 28, duration: 1.3, clearProps: "transform" }, 0)
+    .from([".hero-text .eyebrow", ".hero-buttons", ".hero-facts"], { y: isSmall ? 18 : 24, autoAlpha: 0, duration: MOTION.duration, stagger: 0.1, clearProps: "transform,opacity,visibility" }, 0.1)
+    .from(".hero-badge", { y: 16, autoAlpha: 0, duration: 0.8, clearProps: "transform,opacity,visibility" }, 0.6);
 }
 
 /* ---------------------------
