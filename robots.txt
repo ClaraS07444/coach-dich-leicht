@@ -2,4 +2,4 @@ User-agent: *
 Allow: /
 Disallow: /archiv/
 
-Sitemap: https://DEINE-DOMAIN.de/sitemap.xml
+Sitemap: https://coachdichleicht.de/sitemap.xml

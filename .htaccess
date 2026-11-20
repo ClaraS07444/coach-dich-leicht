@@ -1,0 +1,63 @@
+# =========================================================
+#  Coach dich leicht – Server-Einstellungen (SiteGround / Apache)
+# =========================================================
+
+DirectoryIndex index.html
+Options -Indexes
+
+RewriteEngine On
+
+# --- Immer HTTPS und ohne "www" ---------------------------
+RewriteCond %{HTTPS} !=on [OR]
+RewriteCond %{HTTP_HOST} ^www\. [NC]
+RewriteRule ^ https://coachdichleicht.de%{REQUEST_URI} [R=301,L,NE]
+
+# --- Alte WordPress-Adressen auf die neue Seite -----------
+# Erhält Google-Rankings und alte Links (Instagram, Mails, Lesezeichen).
+RewriteRule ^impressum/?$                 /impressum.html            [R=301,L]
+RewriteRule ^datenschutzerklaerung/?$     /datenschutz.html          [R=301,L]
+RewriteRule ^wer-bin-ich/?$               /#ueber-mich               [R=301,L,NE]
+RewriteRule ^kundenmeinungen/?$           /#meinungen                [R=301,L,NE]
+RewriteRule ^angebot/?$                   /#angebote                 [R=301,L,NE]
+RewriteRule ^11-coaching/?$               /#premium-coaching         [R=301,L,NE]
+RewriteRule ^reset28/?$                   /#reset28                  [R=301,L,NE]
+RewriteRule ^zuckerdetox-handbuch/?$      /#zuckerdetox              [R=301,L,NE]
+RewriteRule ^zuckerfrei-challenge/?$      /#zuckerdetox              [R=301,L,NE]
+RewriteRule ^newsletter/?$                /#zuckerdetox              [R=301,L,NE]
+RewriteRule ^kontakt/?$                   /#kontakt                  [R=301,L,NE]
+RewriteRule ^(blog|feed|comments/feed|author/.*)/?$  /               [R=301,L]
+
+# --- Interne Dateien nicht ausliefern ---------------------
+RewriteRule ^(archiv|\.git|\.github)(/|$) - [F,L]
+
+# --- Komprimierung ----------------------------------------
+<IfModule mod_deflate.c>
+  AddOutputFilterByType DEFLATE text/html text/css application/javascript text/javascript application/xml text/xml text/plain image/svg+xml
+</IfModule>
+
+# --- Browser-Cache ----------------------------------------
+# HTML immer frisch (Änderungen sind sofort sichtbar),
+# Bilder und Schriften lange; CSS/JS eine Stunde (Änderungen kommen schnell an).
+<IfModule mod_expires.c>
+  ExpiresActive On
+  ExpiresDefault                      "access plus 1 week"
+  ExpiresByType text/html             "access plus 0 seconds"
+  ExpiresByType application/xml       "access plus 1 hour"
+  ExpiresByType text/plain            "access plus 1 hour"
+  ExpiresByType text/css              "access plus 1 hour"
+  ExpiresByType application/javascript "access plus 1 hour"
+  ExpiresByType text/javascript       "access plus 1 hour"
+  ExpiresByType image/webp            "access plus 1 year"
+  ExpiresByType image/jpeg            "access plus 1 year"
+  ExpiresByType image/x-icon          "access plus 1 year"
+  ExpiresByType font/woff2            "access plus 1 year"
+  ExpiresByType application/pdf       "access plus 1 month"
+</IfModule>
+
+# --- Sicherheits-Header -----------------------------------
+<IfModule mod_headers.c>
+  Header always set X-Content-Type-Options "nosniff"
+  Header always set Referrer-Policy "strict-origin-when-cross-origin"
+  Header always set X-Frame-Options "SAMEORIGIN"
+  Header always set Permissions-Policy "camera=(), microphone=(), geolocation=()"
+</IfModule>
