@@ -59,9 +59,23 @@ jobs:
             -e "ssh -i ~/.ssh/deploy_key -p $SSH_PORT" \
             ./ "$SSH_USER@$SSH_HOST:$SSH_REMOTE_PATH"
 
+      - name: SiteGround-Cache leeren
+        env:
+          SSH_HOST: ${{ secrets.SSH_HOST }}
+          SSH_PORT: ${{ secrets.SSH_PORT }}
+          SSH_USER: ${{ secrets.SSH_USER }}
+        run: |
+          ssh -i ~/.ssh/deploy_key -p "$SSH_PORT" "$SSH_USER@$SSH_HOST" \
+            'site-tools-client domain update id=1 flush_cache=1'
+
       - name: Prüfen, ob die Seite erreichbar ist
         run: |
           sleep 5
           code=$(curl -s -o /dev/null -w '%{http_code}' https://coachdichleicht.de/)
           echo "Startseite antwortet mit HTTP $code"
           test "$code" = "200"
+          # Die ausgelieferte Startseite muss genau der Datei im Repository entsprechen
+          # (sonst hängt noch eine alte Version im Cache).
+          curl -s https://coachdichleicht.de/ | cmp -s - index.html \
+            && echo "Live-Seite entspricht dem aktuellen Stand." \
+            || { echo "Live-Seite weicht vom Repository ab (Cache?)."; exit 1; }
