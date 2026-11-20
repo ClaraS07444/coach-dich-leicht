@@ -32,6 +32,15 @@ jobs:
       - name: Code holen
         uses: actions/checkout@v4
 
+      - name: Versionsnummer an CSS und JS hängen
+        # SiteGround lässt Browser CSS/JS ein Jahr zwischenspeichern.
+        # Mit ?v=<Commit> bekommt jede neue Version eine neue Adresse
+        # und wird bei allen Besuchern sofort geladen.
+        run: |
+          v="${GITHUB_SHA::7}"
+          sed -i -E "s#(href=\"style\.css)(\?v=[^\"]*)?\"#\1?v=$v\"#g; s#(src=\"script\.js)(\?v=[^\"]*)?\"#\1?v=$v\"#g" *.html
+          grep -o 'style\.css?v=[^"]*\|script\.js?v=[^"]*' *.html
+
       - name: SSH vorbereiten
         env:
           SSH_HOST: ${{ secrets.SSH_HOST }}
