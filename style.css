@@ -1578,6 +1578,12 @@ main:focus {
   margin-top: 0.75rem;
 }
 
+.footer-legal .footer-credit,
+.footer-inner-simple .footer-credit {
+  margin-top: 0;
+  font-size: 0.85rem;
+}
+
 /* ---------- Legal pages ---------- */
 .legal-page {
   display: grid;
