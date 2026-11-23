@@ -21,9 +21,9 @@ RewriteRule ^kundenmeinungen/?$           /#meinungen                [R=301,L,NE
 RewriteRule ^angebot/?$                   /#angebote                 [R=301,L,NE]
 RewriteRule ^11-coaching/?$               /#premium-coaching         [R=301,L,NE]
 RewriteRule ^reset28/?$                   /#reset28                  [R=301,L,NE]
-RewriteRule ^zuckerdetox-handbuch/?$      /#zuckerdetox              [R=301,L,NE]
-RewriteRule ^zuckerfrei-challenge/?$      /#zuckerdetox              [R=301,L,NE]
-RewriteRule ^newsletter/?$                /#zuckerdetox              [R=301,L,NE]
+RewriteRule ^zuckerdetox-handbuch/?$      /#fruehstuecksideen        [R=301,L,NE]
+RewriteRule ^zuckerfrei-challenge/?$      /#fruehstuecksideen        [R=301,L,NE]
+RewriteRule ^newsletter/?$                /#fruehstuecksideen        [R=301,L,NE]
 RewriteRule ^kontakt/?$                   /#kontakt                  [R=301,L,NE]
 RewriteRule ^(blog|feed|comments/feed|author/.*)/?$  /               [R=301,L]
 

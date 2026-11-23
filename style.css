@@ -1754,8 +1754,28 @@ main:focus {
     grid-template-columns: repeat(3, minmax(0, 1fr));
   }
 
-  .freebies-grid {
-    grid-template-columns: repeat(2, minmax(0, 1fr));
+  /* Ein Gratis-Angebot: Karte quer – Heft links, Text und Formular rechts */
+  .freebie-card {
+    display: grid;
+    grid-template-columns: auto minmax(0, 1fr);
+    column-gap: clamp(2rem, 5vw, 4rem);
+    row-gap: 1rem;
+    align-content: start;
+  }
+
+  .freebie-card > * {
+    grid-column: 2;
+  }
+
+  .freebie-card > .freebie-cover {
+    grid-column: 1;
+    grid-row: 1 / span 5;
+    width: 190px;
+    margin: 0.5rem 0 0;
+  }
+
+  .freebie-card .custom-freebie-form-shell {
+    max-width: 34rem;
   }
 
   .reset-quotes {
